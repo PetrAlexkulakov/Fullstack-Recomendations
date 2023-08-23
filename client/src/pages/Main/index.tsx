@@ -1,67 +1,50 @@
+import { useEffect, useState } from "react"
+import axios from "axios";
+import { Post } from "../../interfaces/Post";
 import PageWrapper from "../../components/PageWrapper"
 
 const Main = () => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL
+
+  useEffect(() => {
+    axios.get(baseURL + '/posts').then((res) => {
+        setPosts(res.data)
+    })
+  })
+
   return (
     <PageWrapper>
         <div className="col-lg-8">
-            {/* <!-- Featured blog post--> */}
             <div className="card mb-4">
-                <a href="#!"><img className="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                <div className="card-body">
-                    <div className="small text-muted">January 1, 2023</div>
-                    <h2 className="card-title">Featured Post Title</h2>
-                    <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                    <a className="btn btn-primary" href="#!">Read more →</a>
+                {posts.length > 0 && 
+                <div>
+                    <a href="#!"><img className="card-img-top" src={posts[0].imageURL} alt="Post-IMG" /></a>
+                    <div className="card-body">
+                        <div className="small text-muted">{posts[0].createdAt}</div>
+                        <h2 className="card-title">{posts[0].title}</h2>
+                        <p className="card-text">{posts[0].smallText}</p>
+                        <a className="btn btn-primary" href="#!">Read more →</a>
+                    </div>
                 </div>
+                }
             </div>
-            {/* <!-- Nested row for non-featured blog posts--> */}
             <div className="row">
                 <div className="col-lg-6">
-                    {/* <!-- Blog post--> */}
-                    <div className="card mb-4">
-                        <a href="#!"><img className="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                        <div className="card-body">
-                            <div className="small text-muted">January 1, 2023</div>
-                            <h2 className="card-title h4">Post Title</h2>
-                            <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                            <a className="btn btn-primary" href="#!">Read more →</a>
-                        </div>
-                    </div>
-                    {/* <!-- Blog post--> */}
-                    <div className="card mb-4">
-                        <a href="#!"><img className="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                        <div className="card-body">
-                            <div className="small text-muted">January 1, 2023</div>
-                            <h2 className="card-title h4">Post Title</h2>
-                            <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                            <a className="btn btn-primary" href="#!">Read more →</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-6">
-                    {/* <!-- Blog post--> */}
-                    <div className="card mb-4">
-                        <a href="#!"><img className="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                        <div className="card-body">
-                            <div className="small text-muted">January 1, 2023</div>
-                            <h2 className="card-title h4">Post Title</h2>
-                            <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                            <a className="btn btn-primary" href="#!">Read more →</a>
-                        </div>
-                    </div>
-                    {/* <!-- Blog post--> */}
-                    <div className="card mb-4">
-                        <a href="#!"><img className="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                        <div className="card-body">
-                            <div className="small text-muted">January 1, 2023</div>
-                            <h2 className="card-title h4">Post Title</h2>
-                            <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam.</p>
-                            <a className="btn btn-primary" href="#!">Read more →</a>
-                        </div>
-                    </div>
+                    {posts.slice(1).map((post, index) => {
+                        return(
+                            <div key={index} className="card mb-4">
+                                <a href="#!"><img className="card-img-top" src={post.imageURL} alt="..." /></a>
+                                <div className="card-body">
+                                    <div className="small text-muted">{post.createdAt}</div>
+                                    <h2 className="card-title h4">{post.title}</h2>
+                                    <p className="card-text">{post.smallText}</p>
+                                    <a className="btn btn-primary" href="#!">Read more →</a>
+                                </div>
+                            </div>
+                        )})}
                 </div>
             </div>
-            {/* <!-- Pagination--> */}
             <nav aria-label="Pagination">
                 <hr className="my-0" />
                 <ul className="pagination justify-content-center my-4">
