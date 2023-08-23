@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import { Post } from "../../interfaces/Post";
 import PageWrapper from "../../components/PageWrapper"
+import Cards from "../../components/Cards";
 
 const Main = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -30,33 +31,10 @@ const Main = () => {
                 }
             </div>
             <div className="row">
-                <div className="col-lg-6">
-                    {posts.slice(1).map((post, index) => {
-                        return(
-                            <div key={index} className="card mb-4">
-                                <a href="#!"><img className="card-img-top" src={post.imageURL} alt="..." /></a>
-                                <div className="card-body">
-                                    <div className="small text-muted">{post.createdAt}</div>
-                                    <h2 className="card-title h4">{post.title}</h2>
-                                    <p className="card-text">{post.smallText}</p>
-                                    <a className="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        )})}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+                    <Cards posts={posts} />
                 </div>
             </div>
-            <nav aria-label="Pagination">
-                <hr className="my-0" />
-                <ul className="pagination justify-content-center my-4">
-                    <li className="page-item disabled"><a className="page-link" href="#" aria-disabled="true">Newer</a></li>
-                    <li className="page-item active" aria-current="page"><a className="page-link" href="#!">1</a></li>
-                    <li className="page-item"><a className="page-link" href="#!">2</a></li>
-                    <li className="page-item"><a className="page-link" href="#!">3</a></li>
-                    <li className="page-item disabled"><a className="page-link" href="#!">...</a></li>
-                    <li className="page-item"><a className="page-link" href="#!">15</a></li>
-                    <li className="page-item"><a className="page-link" href="#!">Older</a></li>
-                </ul>
-            </nav>
         </div>
     </PageWrapper>
   )
