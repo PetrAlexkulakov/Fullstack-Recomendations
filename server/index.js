@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors")
 const path = require('path')
-//test
+
 const {Storage} = require('@google-cloud/storage')
 const gc = new Storage({
     keyFilename: path.join(__dirname, "./sinuous-studio-376508-4fbe736302a0.json"),
