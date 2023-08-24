@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Post } from "../../interfaces/Post";
 import axios from "axios";
 import { dataToString } from "../../shared/dataToString";
+import PageWrapper from "../../components/PageWrapper";
 
 const Post = () => {
   const { id } = useParams();
@@ -19,8 +20,7 @@ const Post = () => {
   });
 
   return (
-    <div className="container mt-5">
-    <div className="row">
+    <PageWrapper>
         <div className="col-lg-8">
             {post && 
             <article>
@@ -85,8 +85,7 @@ const Post = () => {
                 </div>
             </section> */}
         </div>
-    </div>
-</div>
+    </PageWrapper>
   )
 }
 
