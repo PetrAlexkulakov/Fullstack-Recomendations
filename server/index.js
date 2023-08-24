@@ -22,7 +22,7 @@ app.use("/posts", postsRouter)
 
 db.sequelize.sync().then(() => {
     app.listen(process.env.PORT || 3001, () => {
-        console.log("Server running on port 3001")
+        console.log("Server is running")
     })    
 }).catch((err) => {
     console.error(err)

@@ -13,7 +13,7 @@ const Main = () => {
     axios.get(baseURL + '/posts').then((res) => {
         setPosts(res.data)
     })
-  })
+  }, [baseURL])
 
   return (
     <PageWrapper>

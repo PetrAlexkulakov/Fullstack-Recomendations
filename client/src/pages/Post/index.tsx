@@ -17,7 +17,7 @@ const Post = () => {
       setPost(res);
     };
     fetchPost();
-  });
+  }, [baseURL, id])
 
   return (
     <PageWrapper>
