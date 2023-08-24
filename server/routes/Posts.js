@@ -35,7 +35,7 @@ router.post("/", upload.single('image'), async (req, res) => {
 
     myBucket.file(uniqueFileName).save(imageFile.buffer)
 
-    post.imageURL = `https://storage.cloud.google.com/mybudget/${uniqueFileName}`;
+    post.imageURL = `https://storage.googleapis.com/mybudget/${uniqueFileName}`;
 
     await Posts.create(post);
     res.json(post);
