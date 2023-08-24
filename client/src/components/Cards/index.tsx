@@ -1,4 +1,5 @@
 import { Post } from "../../interfaces/Post"
+import { dataToString } from "../../shared/dataToString"
 
 const Cards = ({ posts }: { posts: Post[] }) => {
   return (
@@ -8,10 +9,10 @@ const Cards = ({ posts }: { posts: Post[] }) => {
                 <div key={index} className="card mb-4">
                     <a href="#!"><img className="card-img-bottom" src={post.imageURL} alt="..." /></a>
                     <div className="card-body d-flex flex-column justify-content-end">
-                        <div className="small text-muted">{post.createdAt}</div>
+                        <div className="small text-muted">{dataToString(post.createdAt)}</div>
                         <h2 className="card-title h4">{post.title}</h2>
                         <p className="card-text">{post.smallText}</p>
-                        <a className="btn btn-primary" href="#!">Read more →</a>
+                        <a className="btn btn-primary" href={`/post/${post.id}`}>Read more →</a>
                     </div>
                 </div>
             )}
