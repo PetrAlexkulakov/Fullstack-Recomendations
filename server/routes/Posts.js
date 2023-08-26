@@ -24,7 +24,7 @@ router.post("/", upload.single('image'), async (req, res) => {
     const post = req.body;
     const imageFile = req.file;
     const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
-    console.log(keyPath)
+    
     const gc = new Storage({
         keyFilename: keyPath,
         projectId: 'sinuous-studio-376508'

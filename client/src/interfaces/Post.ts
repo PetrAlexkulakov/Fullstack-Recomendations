@@ -5,4 +5,6 @@ export interface Post {
     fullText: string
     imageURL: string
     createdAt: string
+    group: string
+    tags: string
 }

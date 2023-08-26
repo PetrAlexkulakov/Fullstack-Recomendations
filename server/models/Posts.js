@@ -9,13 +9,21 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         fullText: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         imageURL: {
             type: DataTypes.STRING,
             allowNull: false,
-        }
+        },
+        group: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        tags: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     })
     return Posts
 }

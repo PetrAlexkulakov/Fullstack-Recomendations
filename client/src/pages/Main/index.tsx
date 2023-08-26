@@ -3,7 +3,7 @@ import axios from "axios";
 import { Post } from "../../interfaces/Post";
 import PageWrapper from "../../components/PageWrapper"
 import Cards from "../../components/Cards";
-import { dataToString } from "../../shared/dataToString";
+import Card from "../../components/Card";
 
 const Main = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -21,13 +21,7 @@ const Main = () => {
             <div className="card mb-4">
                 {posts.length > 0 && 
                 <div>
-                    <a href="#!"><img className="card-img-top" src={posts[0].imageURL} alt="Post-IMG" /></a>
-                    <div className="card-body">
-                        <div className="small text-muted">{dataToString(posts[0].createdAt)}</div>
-                        <h2 className="card-title">{posts[0].title}</h2>
-                        <p className="card-text">{posts[0].smallText}</p>
-                        <a className="btn btn-primary"  href={`/post/${posts[0].id}`}>Read more →</a>
-                    </div>
+                    <Card post={posts[0]} />
                 </div>
                 }
             </div>
