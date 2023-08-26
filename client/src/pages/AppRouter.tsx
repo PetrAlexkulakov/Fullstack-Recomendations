@@ -15,7 +15,7 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo authorize -> comments, likes, raiting, admin, auth by socialMedia
+//todo authorize -> comments, likes, raiting, admin, auth by socialMedia, creating -> markdown
 //todo search
 //todo tags
 //todo translate
