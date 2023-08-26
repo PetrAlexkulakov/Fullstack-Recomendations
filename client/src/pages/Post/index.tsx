@@ -28,8 +28,7 @@ const Post = () => {
                     <h1 className="fw-bolder mb-1">Welcome to Blog Post!</h1>
                     <div className="text-muted fst-italic mb-2">{dataToString(post.createdAt)}</div>
                     {/* <!-- Post categories--> */}
-                    <a className="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-                    <a className="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                    <div className="badge bg-secondary text-decoration-none link-light w-25">{post.group}</div>
                 </header>
                 <figure className="mb-4"><img className="img-fluid rounded" src={post.imageURL} alt="..." /></figure>
                 {/* <!-- Post content--> */}

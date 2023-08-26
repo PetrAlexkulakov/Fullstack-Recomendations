@@ -8,7 +8,15 @@ const {Storage} = require('@google-cloud/storage')
 const { Posts } = require('../models')
 
 router.get('/', async (req, res) => {
-    const listOfPosts = await Posts.findAll()
+    const { group } = req.query;
+    let whereCondition = {};  
+
+    if (group) {
+        whereCondition.group = group;
+    }
+    const listOfPosts = await Posts.findAll({
+        where: whereCondition
+    })
     res.json(listOfPosts)
 })
 

@@ -6,7 +6,7 @@ const Card = ({ post }: { post: Post }) => {
     <>
         <img className="card-img-bottom" src={post.imageURL} alt="..." />
         <div className="card-body d-flex flex-column justify-content-end align-items-center">
-            <a className="badge bg-secondary text-decoration-none link-light w-25" href="#!">{post.group}</a>
+            <div className="badge bg-secondary text-decoration-none link-light w-25">{post.group}</div>
             <div className="small text-muted">{dataToString(post.createdAt)}</div>
             <h2 className="card-title h4">{post.title}</h2>
             <p className="card-text">{post.smallText}</p>

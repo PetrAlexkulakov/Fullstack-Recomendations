@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import axios from "axios";
 import { Post } from "../../interfaces/Post";
 import PageWrapper from "../../components/PageWrapper"
@@ -7,13 +9,19 @@ import Card from "../../components/Card";
 
 const Main = () => {
   const [posts, setPosts] = useState<Post[]>([]);
-  const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL
+  const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
+  const location = useLocation();
+  const quertParams = queryString.parse(location.search)
 
   useEffect(() => {
-    axios.get(baseURL + '/posts').then((res) => {
+    axios.get(baseURL + '/posts', {
+        params: {
+            group: quertParams.group
+        }
+    }).then((res) => {
         setPosts(res.data)
     })
-  }, [baseURL])
+  }, [baseURL, quertParams])
 
   return (
     <PageWrapper>

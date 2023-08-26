@@ -20,18 +20,12 @@ const PageWrapper = ({ children }: React.PropsWithChildren ) => {
                   <div className="card-header">Groups</div>
                   <div className="card-body">
                       <div className="row">
-                          <div className="col-sm-6">
+                          <div className="col-sm-12">
                               <ul className="list-unstyled mb-0">
-                                  <li><a href="#!">Web Design</a></li>
-                                  <li><a href="#!">HTML</a></li>
-                                  <li><a href="#!">Freebies</a></li>
-                              </ul>
-                          </div>
-                          <div className="col-sm-6">
-                              <ul className="list-unstyled mb-0">
-                                  <li><a href="#!">JavaScript</a></li>
-                                  <li><a href="#!">CSS</a></li>
-                                  <li><a href="#!">Tutorials</a></li>
+                                  <li><a href="?group=film">Film</a></li>
+                                  <li><a href="?group=game">Game</a></li>
+                                  <li><a href="?group=book">Book</a></li>
+                                  <li><a href="?">Any</a></li>
                               </ul>
                           </div>
                       </div>
