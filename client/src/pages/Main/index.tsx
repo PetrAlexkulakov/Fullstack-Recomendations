@@ -21,7 +21,7 @@ const Main = () => {
     }).then((res) => {
         setPosts(res.data)
     })
-  }, [baseURL, quertParams])
+  }, [baseURL])
 
   return (
     <PageWrapper>

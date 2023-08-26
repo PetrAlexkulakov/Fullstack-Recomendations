@@ -17,5 +17,5 @@ export default AppRouter
 
 //todo authorize -> comments, likes, raiting, admin, auth by socialMedia
 //todo search
-//todo tags, group
+//todo tags
 //todo translate
