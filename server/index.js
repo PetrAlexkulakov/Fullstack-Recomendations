@@ -18,7 +18,9 @@ app.use(cors())
 const db = require('./models')
 
 const postsRouter = require('./routes/Posts')
+const tagsRouter = require('./routes/Tags')
 app.use("/posts", postsRouter)
+app.use("/tags", tagsRouter)
 
 db.sequelize.sync().then(() => {
     app.listen(process.env.PORT || 3001, () => {

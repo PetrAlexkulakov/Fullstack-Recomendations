@@ -7,5 +7,4 @@ router.get('/', async (req, res) => {
     res.json(listOfTags)
 })
 
-
 module.exports = router
