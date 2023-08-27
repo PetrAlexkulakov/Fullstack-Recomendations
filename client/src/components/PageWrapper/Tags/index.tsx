@@ -22,7 +22,7 @@ const Tags = () => {
 
     const addTag = () => {
         if (tag) {
-          const newTags = [...activeTags as string[], tag]; // добавляем новый тег к существующим
+          const newTags = [...(activeTags || []) as string[], tag];
           const newQueryParams = {
             ...queryParams,
             tags: newTags.join(";")
@@ -30,7 +30,16 @@ const Tags = () => {
           navigator(`?` + queryString.stringify(newQueryParams));
           setTag(null);
         }
-      };
+    };
+
+    const deleteTag = (index: string) => {
+        const newTags: string[] = ( activeTags  as string[] ).filter((_, i) => i !== Number(index));
+        const newQueryParams = {
+            ...queryParams,
+            tags: newTags.length > 0 ? newTags.join(";") : undefined
+        };
+        navigator(`?` + queryString.stringify(newQueryParams));
+    }
 
     const promiseOptions = (inputValue: string) => {
         return new Promise((resolve) => {
@@ -49,9 +58,20 @@ const Tags = () => {
         <div className="card mb-4">
             <div className="card-header">Filter by tags</div>
             <div className="card-body">
-                {activeTags && activeTags.map((tag, index) => 
-                    <div key={index} className="badge bg-primary text-decoration-none link-light m-1 w-25">{tag}</div>
-                )}
+                <div className="d-flex flex-wrap gap-1 mb-1">
+                    {activeTags && activeTags.map((tag, index) => 
+                        <div key={index} 
+                            className="d-flex justify-content-between 
+                            badge bg-primary text-decoration-none link-light w-25">
+                                <div>{tag}</div>
+                                <button
+                                    id={String(index)}
+                                    className="btn-delete p-0" 
+                                    onClick={(e) => deleteTag((e.target as HTMLButtonElement).id)}
+                                />
+                        </div>
+                    )}
+                </div>
                 <div>
                     <AsyncCreatableSelect
                         cacheOptions

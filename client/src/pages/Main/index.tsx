@@ -16,12 +16,13 @@ const Main = () => {
   useEffect(() => {
     axios.get(baseURL + '/posts', {
         params: {
-            group: quertParams.group
+            group: quertParams.group,
+            tags: quertParams.tags
         }
     }).then((res) => {
         setPosts(res.data)
     })
-  }, [baseURL, quertParams.group])
+  }, [baseURL, quertParams.group, quertParams.tags])
 
   return (
     <PageWrapper>
