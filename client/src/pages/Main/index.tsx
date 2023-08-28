@@ -17,12 +17,13 @@ const Main = () => {
     axios.get(baseURL + '/posts', {
         params: {
             group: quertParams.group,
-            tags: quertParams.tags
+            tags: quertParams.tags,
+            search: quertParams.search
         }
     }).then((res) => {
         setPosts(res.data)
     })
-  }, [baseURL, quertParams.group, quertParams.tags])
+  }, [baseURL, quertParams.group, quertParams.search, quertParams.tags])
 
   return (
     <PageWrapper>

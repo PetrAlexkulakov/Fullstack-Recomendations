@@ -10,7 +10,7 @@ const { Posts } = require('../models')
 const { Tags } = require('../models')
 
 router.get('/', async (req, res) => {
-    const { group, tags } = req.query;
+    const { group, tags, search } = req.query;
     let whereCondition = {};  
 
     if (group) {
@@ -21,6 +21,15 @@ router.get('/', async (req, res) => {
         whereCondition['$Tags.name$'] = {
             [Op.in]: tags.split(';').map(tag => tag.trim())
         };
+    }
+
+    if (search) {
+        const searchLower = search.toLowerCase();
+        whereCondition[Op.or] = [
+            { title: { [Op.like]: `%${searchLower}%` } },
+            { smallText: { [Op.like]: `%${searchLower}%` } },
+            { fullText: { [Op.like]: `%${searchLower}%` } }
+        ];
     }
 
     const listOfPosts = await Posts.findAll({
