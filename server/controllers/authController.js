@@ -27,25 +27,18 @@ module.exports.login = async function(req, res) {
 module.exports.register = async function(req, res) {
   const { email, password, username } = req.body;
 
-  // Генерация "соли" для хеширования
   const salt = bcrypt.genSaltSync(10);
-
-  // Хеширование пароля с использованием соли
   const hashedPassword = bcrypt.hashSync(password, salt);
 
   try {
-    // Создание нового пользователя
     const newUser = await Users.create({
       username,
       email: email,
       password: hashedPassword,
-      // ... Другие поля пользователя
     });
 
-    // Возвращаем успешный ответ
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    // Возвращаем ошибку
     res.status(500).json({ message: 'Registration failed' });
   }
 };
