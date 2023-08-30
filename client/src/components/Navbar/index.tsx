@@ -11,7 +11,8 @@ const Navbar = () => {
     localStorage.removeItem('token');
     setUser(false); 
   }
-  //todo /\ remove this /\
+  //todo /\ remove this /\ and change from PageWrapper(?)
+  //todo improve design
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">

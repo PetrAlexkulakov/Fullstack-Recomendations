@@ -37,7 +37,13 @@ module.exports.register = async function(req, res) {
       password: hashedPassword,
     });
 
-    res.status(201).json({ message: 'User registered successfully' });
+    const token = jwt.sign({
+      email: newUser.email,
+      userId: newUser.id
+    }, keys.jwt, { expiresIn: 3600 })
+    res.status(200).json({
+      token: token
+    });
   } catch (error) {
     res.status(500).json({ message: 'Registration failed' });
   }
