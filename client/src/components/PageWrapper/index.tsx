@@ -2,9 +2,12 @@ import { ReactNode } from "react"
 import Groups from "./Groups"
 import Search from "./Search"
 import Tags from "./Tags"
+import Navbar from "../Navbar"
 
 const PageWrapper = ({ children, isMain }: { children: ReactNode, isMain?: boolean } ) => {
     return (
+    <>
+      <Navbar />
       <div className="container">
       <div className="row">
         { children }
@@ -36,7 +39,8 @@ const PageWrapper = ({ children, isMain }: { children: ReactNode, isMain?: boole
               }
           </div>
       </div>
-  </div>
+    </div>
+    </>
     )
 }
   

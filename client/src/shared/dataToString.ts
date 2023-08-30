@@ -1,5 +1,3 @@
-
-
 export const dataToString = (dateString: string) => {
   const date = new Date(dateString);
   const day = date.getDate();
