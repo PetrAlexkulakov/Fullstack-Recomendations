@@ -4,10 +4,12 @@ const { Users } = require('../models');
 const keys = require('../keys');
 
 module.exports.login = async function(req, res) {
-  const candidate = await Users.findOne({email: req.body.email})
+  const candidate = await Users.findOne({where: {email: req.body.email} })
 
   if (candidate) {
-    const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+    const passwordResult = bcrypt.compareSync(req.body.password, candidate.password);
     if (passwordResult) {
       const token = jwt.sign({
         email: candidate.email,

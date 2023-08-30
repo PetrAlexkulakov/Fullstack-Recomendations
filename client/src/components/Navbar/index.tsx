@@ -10,6 +10,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUser(false); 
+    window.location.reload();
   }
   //todo /\ remove this /\ and change from PageWrapper(?)
   //todo improve design
