@@ -13,28 +13,25 @@ const Navbar = () => {
     window.location.reload();
   }
   //todo /\ remove this /\ and change from PageWrapper(?)
-  //todo improve design
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
-            <a className="navbar-brand" href="/">Recomendations</a>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" 
-              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-              aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                  <li className="nav-item"><a className="nav-link" href="/">Home</a></li>
-                  <li className="nav-item">
-                  {user ? (
-                    <button className={classes.btnSignOut} onClick={handleLogout}></button>
-                  ) : (
-                    <button className={classes.btnSignIn} onClick={handleLogin}></button>
-                  )}</li>
-                </ul>
-            </div>
+      <div className="container me-0">
+        <a className="navbar-brand" href="/">Recomendations</a>
+        <div className="collapse navbar-collapse me-2" id="navbarSupportedContent">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0" style={{alignItems: "center"}}>
+            <li className="nav-item"><a className="nav-link" href="/">Home</a></li>
+            <li className="nav-item">
+            {user ? (
+              <button className={classes.btnSignOut} onClick={handleLogout}/>
+            ) : (
+              <button className={classes.btnSignIn} onClick={handleLogin}/>
+            )}</li>
+          </ul>
         </div>
+        {user && (
+          <a href="/profile"><button className={classes.btnProfile}/></a>
+        )}
+      </div>
     </nav>
   )
 }

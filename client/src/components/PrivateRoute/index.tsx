@@ -6,7 +6,7 @@ const PrivateRoute = ({
     children,
   }: {
     isAuthenticated: boolean,
-    redirectPath: string,
+    redirectPath?: string,
     children?: React.ReactNode
   }) => {
     if (!isAuthenticated) {

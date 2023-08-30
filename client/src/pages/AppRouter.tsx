@@ -6,6 +6,7 @@ import Auth from './Auth';
 import { checkIsAuthenticated } from '../shared/authentification/isAuthenticated';
 import PrivateRoute from '../components/PrivateRoute';
 import Register from './Register';
+import Profile from './Profile';
 
 const AppRouter = () => {
   const [isAuthenticated] = useState(checkIsAuthenticated())
@@ -18,6 +19,9 @@ const AppRouter = () => {
           <Route path="/auth" element={<Auth />} />
           <Route path="/register" element={<Register />} />
         </Route>
+        <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
@@ -25,5 +29,5 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo authorize -> validation, comments, likes, raiting, admin, auth by socialMedia, creating -> markdown
+//todo (authorize) -> validation, comments, likes, raiting, admin, auth by socialMedia, creating -> markdown
 //todo translate
