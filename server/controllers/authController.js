@@ -15,7 +15,7 @@ module.exports.login = async function(req, res) {
         email: candidate.email,
         username: candidate.username,
         userId: candidate.id
-      }, keys.jwt, { expiresIn: 360000 })
+      }, keys.jwt, { expiresIn: 3600 })
       res.status(200).json({
         token: token
       });
@@ -44,7 +44,7 @@ module.exports.register = async function(req, res) {
     const token = jwt.sign({
       email: newUser.email,
       userId: newUser.id
-    }, keys.jwt, { expiresIn: 360000 })
+    }, keys.jwt, { expiresIn: 3600 })
     res.status(200).json({
       token: token
     });
@@ -53,7 +53,7 @@ module.exports.register = async function(req, res) {
   }
 };
 
-module.exports.getUsername = async function(req, res) { 
+module.exports.getUsername = async function(req, res) {
   const token = req.headers.authorization.split(' ')[1];
   try {
     const decodedToken = jwt.verify(token, keys.jwt);
