@@ -2,24 +2,19 @@ const express = require('express')
 const router = express.Router()
 const { Users } = require('../models')
 
-// router.get('/', async (req, res) => {
-//     const listOfUsers = await Users.findAll()
-//     res.json(listOfUsers)
-// })
-
-// router.get('/:id', async (req, res) => {
-//     const id = req.params.id;
+router.get('/:userId/posts', async (req, res) => {
+    const userId = req.params.userId;
     
-//     const user = await Users.findByPk(id);
+    const user = await Users.findByPk(userId, {
+        include: [
+            {
+                model: Posts,
+            }
+        ]
+    });
 
-//     res.json(user);
-// })
+    res.json(user.Posts);
+});
 
-// router.post("/", async (req, res) => {
-//     const user = req.body
-//     await Users.create(user);
-
-//     res.json(user)
-// })
 
 module.exports = router

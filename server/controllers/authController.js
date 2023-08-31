@@ -13,8 +13,9 @@ module.exports.login = async function(req, res) {
     if (passwordResult) {
       const token = jwt.sign({
         email: candidate.email,
+        username: candidate.username,
         userId: candidate.id
-      }, keys.jwt, { expiresIn: 3600 })
+      }, keys.jwt, { expiresIn: 360000 })
       res.status(200).json({
         token: token
       });
@@ -37,16 +38,32 @@ module.exports.register = async function(req, res) {
       username,
       email: email,
       password: hashedPassword,
+      userId: {}
     });
 
     const token = jwt.sign({
       email: newUser.email,
       userId: newUser.id
-    }, keys.jwt, { expiresIn: 3600 })
+    }, keys.jwt, { expiresIn: 360000 })
     res.status(200).json({
       token: token
     });
   } catch (error) {
     res.status(500).json({ message: 'Registration failed' });
+  }
+};
+
+module.exports.getUsername = async function(req, res) { 
+  const token = req.headers.authorization.split(' ')[1];
+  try {
+    const decodedToken = jwt.verify(token, keys.jwt);
+    const { username } = decodedToken;
+    res.status(200).json({
+      username
+    });
+    // Делайте что-то с полученными данными о пользователе
+  } catch (error) {
+      // Обработайте ошибку, например, если токен недействителен
+      res.status(500).json({ message: 'Failed' });
   }
 };

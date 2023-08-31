@@ -14,5 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
+    Users.associate = (models) => {
+        Users.hasMany(models.Posts, {
+            foreignKey: "userId", // Внешний ключ в таблице Posts, связывающий с таблицей Users
+        });
+    };
+
     return Users;
 };

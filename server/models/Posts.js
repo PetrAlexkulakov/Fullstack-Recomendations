@@ -24,13 +24,22 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
+        userId: {
+            type: DataTypes.INTEGER, // Предполагаемый тип данных для userId
+            allowNull: true,
+        },
     })
 
     Posts.associate = (models) => {
+        Posts.belongsTo(models.Users, {
+            foreignKey: "userId", // Внешний ключ в таблице Posts, связанный с таблицей Users
+            as: 'author', // Указываем алиас для связи
+        });
         // Определение связи "многие-ко-многим" между постами и тегами
         Posts.belongsToMany(models.Tags, {
             through: "PostTags", // Промежуточная таблица для хранения связей
             foreignKey: "postId", // Внешний ключ в таблице PostTags, связывающий с таблицей Posts
+            as: 'Tags',
         });
     };
 

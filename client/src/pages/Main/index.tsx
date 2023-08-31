@@ -37,7 +37,7 @@ const Main = () => {
             </div>
             <div className="row">
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                    <Cards posts={posts} />
+                    <Cards posts={posts.slice(1)} />
                 </div>
             </div>
         </div>
