@@ -7,6 +7,7 @@ import { checkIsAuthenticated } from '../shared/authentification/isAuthenticated
 import PrivateRoute from '../components/PrivateRoute';
 import Register from './Register';
 import Profile from './Profile';
+import CreatePost from './CreatePost';
 
 const AppRouter = () => {
   const [isAuthenticated] = useState(checkIsAuthenticated())
@@ -21,6 +22,7 @@ const AppRouter = () => {
         </Route>
         <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/createPost" element={<CreatePost />} />
         </Route>
       </Routes>
     </BrowserRouter>

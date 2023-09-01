@@ -43,6 +43,7 @@ module.exports.register = async function(req, res) {
 
     const token = jwt.sign({
       email: newUser.email,
+      username: candidate.username,
       userId: newUser.id
     }, keys.jwt, { expiresIn: 3600 })
     res.status(200).json({

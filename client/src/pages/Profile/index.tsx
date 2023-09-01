@@ -20,7 +20,7 @@ const Profile = () => {
     // Установите конфигурацию для axios запроса с заголовком Authorization
     const axiosConfig = {
         headers: {
-        Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         },
     };
     axios.post(baseURL + '/auth/username', null, axiosConfig).then((res) => {
@@ -28,19 +28,22 @@ const Profile = () => {
     }).catch((error) => {
         console.log(error)
     });
+
+    axios.get(baseURL + '/users/userposts', axiosConfig).then((res) => {
+        setPosts(res.data)
+    })
   }, [baseURL])
   
   
   return (
     <PageWrapper isMain={true}>
         <div className="col-lg-8">
+        <a href="/createPost">Create Post</a>
             <div className="row">
                 <h1>Hello, {username}!</h1>
             </div>
             <div className="row">
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                    <Cards posts={posts} />
-                </div>
+                <Cards posts={posts} />
             </div>
         </div>
     </PageWrapper>

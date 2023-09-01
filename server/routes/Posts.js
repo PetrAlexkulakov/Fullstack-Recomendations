@@ -5,6 +5,8 @@ const router = express.Router()
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+const jwt = require('jsonwebtoken');
+const keys = require('../keys');
 const {Storage} = require('@google-cloud/storage')
 const { Posts } = require('../models')
 const { Tags } = require('../models')
@@ -77,34 +79,40 @@ router.post("/", upload.single('image'), async (req, res) => {
 
     post.imageURL = `https://storage.googleapis.com/mybudget/${uniqueFileName}`;
 
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, keys.jwt);
-    const { authorId } = decodedToken;
-    // Создание поста и указание автора (userId)
-    const createdPost = await Posts.create({
-        ...post,
-        userId: authorId // Предполагая, что в req.user у вас хранится текущий пользователь
-    });//todo /\
+    if (req.headers.authorization) {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, keys.jwt);
+        const { authorId } = decodedToken;
 
-    const tagsReq = req.body.tags.split(';')
+        // Создание поста и указание автора (userId)
+        const createdPost = await Posts.create({
+            ...post,
+            userId: authorId // Предполагая, что в req.user у вас хранится текущий пользователь
+        });//todo /\
 
-    if (tagsReq && Array.isArray(tagsReq)) {
-        for (const tagName of tagsReq) {
-            // Проверяем, существует ли тег с таким именем
-            const [tag, created] = await Tags.findOrCreate({
-                where: { name: tagName }
-            });
+        const tagsReq = req.body.tags.split(';')
 
-            if (!created) {
-                // Если тег уже существует, просто добавляем пост в этот тег
-                await createdPost.addTag(tag);
-            } else {
-                // Если тег только что создан, добавляем его и связываем с постом
-                await createdPost.addTags(tag);
+        if (tagsReq && Array.isArray(tagsReq)) {
+            for (const tagName of tagsReq) {
+                // Проверяем, существует ли тег с таким именем
+                const [tag, created] = await Tags.findOrCreate({
+                    where: { name: tagName }
+                });
+
+                if (!created) {
+                    // Если тег уже существует, просто добавляем пост в этот тег
+                    await createdPost.addTag(tag);
+                } else {
+                    // Если тег только что создан, добавляем его и связываем с постом
+                    await createdPost.addTags(tag);
+                }
             }
         }
+        res.json(post);
+    } else {
+        res.status(401).json({ error: 'Unauthorized' })
     }
-    res.json(post);
+    
 });
 
 module.exports = router
