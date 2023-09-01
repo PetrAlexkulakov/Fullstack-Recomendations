@@ -76,7 +76,7 @@ const CreatePost = () => {
                     className="form-control" 
                     id="InputText3"
                     value={text}
-                    onChange={(e) => setText(e.target.value)}/>//? huli?
+                    onChange={(e) => setText(e.target.value)}/>
             </div>
             <div className="d-flex justify-content-between mb-3 mt-2">
                 <div className='w-25'>

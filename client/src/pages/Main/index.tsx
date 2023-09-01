@@ -36,7 +36,7 @@ const Main = () => {
                 }
             </div>
             <div className="row">
-                <Cards posts={posts.slice(1)} />
+                <Cards posts={posts.slice(1)} isSecondary={true} />
             </div>
         </div>
     </PageWrapper>

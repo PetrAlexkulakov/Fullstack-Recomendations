@@ -1,0 +1,21 @@
+.btnAddPost {
+    cursor: pointer;
+    width: 100%;
+    background-color: rgb(233, 233, 233);
+    border: 1px solid rgb(71, 71, 71);
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+.btnPlus {
+    background-image: url('../../assets/plus-lg.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+}
+.centeredContent {
+    flex-grow: 1; /* Занимает все доступное пространство, выталкивая div.btnPlus вправо */
+}

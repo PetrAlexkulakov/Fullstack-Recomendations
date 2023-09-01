@@ -1,10 +1,10 @@
 import { Post } from "../../interfaces/Post"
 import Card from "../Card"
 
-const Cards = ({ posts }: { posts: Post[] }) => {
+const Cards = ({ posts, isSecondary = false }: { posts: Post[], isSecondary?: boolean }) => {
   return (
     <>
-      {posts.length > 0 ? (
+      {posts.length > 0 || isSecondary ? (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
           {posts.map((post, index) => (
             <div key={index} className="card mb-4">
@@ -13,7 +13,7 @@ const Cards = ({ posts }: { posts: Post[] }) => {
           ))}
         </div>
       ) : (
-        <h1>No Posts Available</h1>
+        <h3>No Posts Available</h3>
       )}
     </>
   )

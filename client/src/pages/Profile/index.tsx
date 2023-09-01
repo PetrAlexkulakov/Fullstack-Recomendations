@@ -5,6 +5,7 @@ import Post from "../Post";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
+import classes from './styles.module.scss'
 
 const Profile = () => {
   const [username, setUsername] = useState('User')
@@ -37,8 +38,13 @@ const Profile = () => {
   
   return (
     <PageWrapper isMain={true}>
-        <div className="col-lg-8">
-        <a href="/createPost">Create Post</a>
+        <div className="col-lg-8 pt-2">
+            <a href="/createPost" className={classes.btnAddPost}>
+                <div className={classes.centeredContent}>
+                    <div className="btn">Create Post</div>
+                </div>
+                <div className={classes.btnPlus}></div>
+            </a>
             <div className="row">
                 <h1>Hello, {username}!</h1>
             </div>
