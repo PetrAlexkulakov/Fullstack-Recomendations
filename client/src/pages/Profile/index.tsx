@@ -15,25 +15,28 @@ const Profile = () => {
   const quertParams = queryString.parse(location.search)
 
   useEffect(() => {
-    // Получите токен из localStorage или вашего состояния
     const token = localStorage.getItem('token');
-
-    // Установите конфигурацию для axios запроса с заголовком Authorization
     const axiosConfig = {
         headers: {
             Authorization: `Bearer ${token}`,
         },
+        params: {
+            group: quertParams.group,
+            tags: quertParams.tags,
+            search: quertParams.search
+        }
     };
+
     axios.post(baseURL + '/auth/username', null, axiosConfig).then((res) => {
         setUsername(res.data.username)
     }).catch((error) => {
         console.log(error)
     });
-
+    
     axios.get(baseURL + '/users/userposts', axiosConfig).then((res) => {
         setPosts(res.data)
     })
-  }, [baseURL])
+  }, [baseURL, quertParams.group, quertParams.search, quertParams.tags])
   
   
   return (
