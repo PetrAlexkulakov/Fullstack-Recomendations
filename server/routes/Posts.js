@@ -82,13 +82,11 @@ router.post("/", upload.single('image'), async (req, res) => {
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, keys.jwt);
-        const { authorId } = decodedToken;
+        const { userId } = decodedToken;
 
+        post.userId = userId;
         // Создание поста и указание автора (userId)
-        const createdPost = await Posts.create({
-            ...post,
-            userId: authorId // Предполагая, что в req.user у вас хранится текущий пользователь
-        });//todo /\
+        const createdPost = await Posts.create(post);
 
         const tagsReq = req.body.tags.split(';')
 
@@ -112,7 +110,6 @@ router.post("/", upload.single('image'), async (req, res) => {
     } else {
         res.status(401).json({ error: 'Unauthorized' })
     }
-    
 });
 
 module.exports = router
