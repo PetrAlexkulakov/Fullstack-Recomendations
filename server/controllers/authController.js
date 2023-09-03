@@ -35,7 +35,7 @@ module.exports.register = async function(req, res) {
 
   try {
     const newUser = await Users.create({
-      username,
+      username: username,
       email: email,
       password: hashedPassword,
       userId: {}
@@ -43,7 +43,7 @@ module.exports.register = async function(req, res) {
 
     const token = jwt.sign({
       email: newUser.email,
-      username: candidate.username,
+      username: newUser.username,
       userId: newUser.id
     }, keys.jwt, { expiresIn: 3600 })
     res.status(200).json({
