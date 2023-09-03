@@ -10,6 +10,14 @@ const TagsBody = ({ tag, setTag, activeTags, addTag = () => {}, deleteTag = () =
 }) => {
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
+  const handleCreateTag = async (newTag: string) => {
+    const alreadyExists = activeTags?.some((tag) => tag.toLowerCase() === newTag.toLowerCase());
+  
+    if (!alreadyExists) {
+      setTag(newTag);
+    }
+  };
+
   const handleSelectChange = (selectedOption: { name: string } | null) => {
     if (selectedOption !== null) {
       setTag(selectedOption.name);
@@ -46,22 +54,25 @@ const TagsBody = ({ tag, setTag, activeTags, addTag = () => {}, deleteTag = () =
                 </div>
             )}
         </div>
-        <div>
+        <div className='d-flex align-items-center'>
             <AsyncCreatableSelect
+                className='w-100'
                 cacheOptions
                 defaultOptions
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 loadOptions={promiseOptions as any}
                 value={tag !== null ? { name: tag, label: tag } : null}
                 onChange={handleSelectChange}
-                onCreateOption={addTag}
+                onCreateOption={(newTag) => handleCreateTag(newTag)}
                 onKeyDown={(e) => {
                 if (e.key === "Enter") {
                     e.preventDefault();
                     addTag();
+                    setTag(null);
                 }
                 }}
             />
+            <button type='button' className='border ms-1' onClick={addTag}>Add</button>
         </div>
     </div>
   )

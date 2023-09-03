@@ -16,14 +16,10 @@ const CreatePost = () => {
   const navigate = useNavigate();
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
-//   const handleKeyPress = (e) => {
-//     if (e.key === "Enter") {
-//       e.preventDefault();
-//     }
-//   };
   const addTag = () => {
     if (tag) {
       setActiveTags((prevTags) => [...prevTags, tag]);
+      setTag(null);
     }
   };
 
@@ -72,7 +68,13 @@ const CreatePost = () => {
                       className="form-control" 
                       id="InputText1" 
                       value={title}
-                      onChange={(e) => setTitle(e.target.value)}/>
+                      onChange={(e) => setTitle(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                        }
+                      }}
+                      />
               </div>
               <div className="mb-3">
                   <label htmlFor="InputText2" className="form-label">Annotation:</label>
