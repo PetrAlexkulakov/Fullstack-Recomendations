@@ -72,7 +72,7 @@ const TagsBody = ({ tag, setTag, activeTags, addTag = () => {}, deleteTag = () =
                 }
                 }}
             />
-            <button type='button' className='border ms-1' onClick={addTag}>Add</button>
+            <button type='button' className='border ms-1 p-2' onClick={addTag}>Add</button>
         </div>
     </div>
   )

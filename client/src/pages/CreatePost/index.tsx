@@ -82,6 +82,7 @@ const CreatePost = () => {
                 onChange={(e) => setAnnotation(e.target.value)}
                 isTextArea={true}
                 stringLength={255}
+                rows={3}
               />
           </div>
           <div className="mb-3">
@@ -92,11 +93,12 @@ const CreatePost = () => {
               value={text}
               onChange={(e) => setText(e.target.value)}
               isTextArea={true}
+              rows={10}
             />
           </div>
-          <div className="d-flex justify-content-between mb-3 mt-2">
-            <div className='w-25'>
-              <label htmlFor="InputSelect1" className="form-label">Select Group:</label>
+          <div className="d-flex justify-content-between align-items-center mb-3 mt-2">
+            <div className='w-25 me-1'>
+              <label htmlFor="InputSelect1" className="form-label">Group:</label>
               <select 
                 className="form-select" 
                 id="InputSelect1" 
@@ -107,7 +109,7 @@ const CreatePost = () => {
                 <option value="Film">Film</option>
               </select>
             </div>
-            <div className='w-50'>
+            <div className='w-100'>
               <label htmlFor="InputText4" className="form-label">Input Tags:</label>
               <TagsBody 
                 tag={tag} 

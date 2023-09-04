@@ -16,12 +16,10 @@ const InputValidator = ({ isTextArea, stringLength = 100000, ...props }: {
   const [inputLength, setInputLength] = useState(props.value.length);
   const textAreaRef = useRef<HTMLTextAreaElement | undefined>();
 
-  // Обновлять высоту textarea в зависимости от содержимого
   useEffect(() => {
     const textArea = textAreaRef.current;
     if(textArea) {
-        // textArea.style.height = "auto"; // Сначала сбросить высоту
-        textArea.style.height = `${textArea.scrollHeight}px`; // Установить высоту равной высоте содержимого
+        textArea.style.height = `${textArea.scrollHeight}px`;
     }
   });
 
