@@ -34,12 +34,12 @@ router.get('/:id', async (req, res) => {
     const id = req.params.id;
     
     const post = await Posts.findByPk(id, {
-        include: [
-            {
-                model: Users,
-                attributes: ['id', 'username', 'email'], // Выберите нужные атрибуты пользователя
-            }
-        ]
+        // include: [
+        //     {
+        //         model: Users,
+        //         attributes: ['id', 'username', 'email'], // Выберите нужные атрибуты пользователя
+        //     }
+        // ]
     });
     res.json(post);
 })
