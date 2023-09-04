@@ -10,7 +10,7 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [annotation, setAnnotation] = useState("");
   const [text, setText] = useState("");
-  const [group, setGroup] = useState("");
+  const [group, setGroup] = useState("Book");
   const [tag, setTag] = useState<string | null>(null);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

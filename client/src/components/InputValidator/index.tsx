@@ -27,7 +27,7 @@ const InputValidator = ({ isTextArea, stringLength = 100000, ...props }: {
     setInputLength(e.target.value.length);
     props.onChange(e);
   };
-
+//todo validation, design fix
   return (
     <>
         {isTextArea ? (
