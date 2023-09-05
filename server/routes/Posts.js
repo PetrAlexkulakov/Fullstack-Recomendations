@@ -49,17 +49,22 @@ router.post("/", upload.single('image'), async (req, res) => {
     const imageFile = req.file;
     const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
     
-    const gc = new Storage({
-        keyFilename: keyPath,
-        projectId: 'sinuous-studio-376508'
-    });
-    const myBucket = gc.bucket('mybudget');
-
-    const uniqueFileName = Date.now() + "_" + imageFile.originalname;
-
-    myBucket.file(uniqueFileName).save(imageFile.buffer)
-
-    post.imageURL = `https://storage.googleapis.com/mybudget/${uniqueFileName}`;
+    if (imageFile) {
+        const gc = new Storage({
+            keyFilename: keyPath,
+            projectId: 'sinuous-studio-376508'
+        });
+        const myBucket = gc.bucket('mybudget');
+    
+        const uniqueFileName = Date.now() + "_" + imageFile.originalname;
+    
+        myBucket.file(uniqueFileName).save(imageFile.buffer)
+    
+        post.imageURL = `https://storage.googleapis.com/mybudget/${uniqueFileName}`;
+    }
+    else {
+        post.imageURL = 'https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg'
+    }
 
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(' ')[1];

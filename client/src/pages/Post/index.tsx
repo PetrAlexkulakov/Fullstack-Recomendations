@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Post } from "../../interfaces/Post";
 import axios from "axios";
+import ReactMarkdown from 'react-markdown';
 import { dataToString } from "../../shared/dataToString";
 import PageWrapper from "../../components/PageWrapper";
 
@@ -27,16 +28,16 @@ const Post = () => {
                 <header className="mb-4">
                     <h1 className="fw-bolder mb-1">Welcome to Blog Post!</h1>
                     <div className="text-muted fst-italic mb-2">{dataToString(post.createdAt)}</div>
-                    {/* <!-- Post categories--> */}
                     <div className="badge bg-secondary text-decoration-none link-light w-25">{post.group}</div>
                 </header>
                 <figure className="mb-4"><img className="img-fluid rounded" src={post.imageURL} alt="..." /></figure>
-                {/* <!-- Post content--> */}
-                <section className="mb-5">
+                <section className="mb-5" style={{textAlign: "left"}}>
                     {post.fullText.split('\n').map((paragraph, index) => (
-                        <p key={index} className="fs-5 mb-4" style={{ whiteSpace: 'pre-line', textAlign: 'left' }}>
-                            {paragraph}
-                        </p>
+                        <ReactMarkdown 
+                            key={index} 
+                            className="fs-5 mb-4"
+                            children={paragraph} 
+                        />
                     ))}
                 </section>
             </article> 

@@ -78,6 +78,7 @@ const CreatePost = () => {
                 type= "text"
                 className="form-control"
                 id="InputText1"
+                placeholder='The title of the article'
                 value={title}
                 {...register("title", { 
                   required: "This input is required.", 
@@ -108,6 +109,7 @@ const CreatePost = () => {
                 className="form-control"
                 id="InputText2"
                 value={annotation}
+                placeholder='At this review I wanna tell about...'
                 {...register("annotation", { 
                   required: "Annotation is required.", 
                   maxLength: {
@@ -137,6 +139,7 @@ const CreatePost = () => {
               <textarea 
                 className="form-control"
                 id="InputText3"
+                placeholder='You can use Markdown'
                 value={text}
                 {...register("text", { 
                   required: "This input is required.", 
