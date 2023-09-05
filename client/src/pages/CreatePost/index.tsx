@@ -1,10 +1,20 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import { useForm, SubmitHandler, MultipleFieldErrors } from "react-hook-form"
 import { useNavigate } from 'react-router-dom';
+import { ErrorMessage } from "@hookform/error-message";
+import { v4 as uuidv4 } from 'uuid';
 import Navbar from '../../components/Navbar'
 import classes from './styles.module.scss'
 import axios from 'axios';
 import TagsBody from '../../components/TagsBody';
-import InputValidator from '../../components/InputValidator';
+import ErrorComponent from '../../components/ErrorComponent';
+
+interface IFormInput {
+  title: string
+  annotation: string
+  text: string
+  file: File
+}
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -14,6 +24,9 @@ const CreatePost = () => {
   const [tag, setTag] = useState<string | null>(null);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>({
+    criteriaMode: "all"
+  })
   const navigate = useNavigate();
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
@@ -29,9 +42,7 @@ const CreatePost = () => {
     setActiveTags(newTags)
   }
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-  
+  const onSubmit: SubmitHandler<IFormInput> = async () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("smallText", annotation);
@@ -58,43 +69,97 @@ const CreatePost = () => {
     <>
       <Navbar />
       <div className={classes.createContainer + " d-flex justify-content-center align-items-center"}>
-        <form className={classes.createForm + " w-75 p-2"} onSubmit={handleSubmit}>
+        <form className={classes.createForm + " w-75 p-2"} onSubmit={handleSubmit(onSubmit)}>
           <h2>Create New Review!</h2>
           <div className="mb-3 mt-2">
               <label htmlFor="InputText1" className="form-label">Title:</label>
-              <InputValidator 
+              <input 
                 type= "text"
                 className="form-control"
                 id="InputText1"
                 value={title}
+                {...register("title", { 
+                  required: "This input is required.", 
+                  maxLength: {
+                    value: 40,
+                    message: "This input must exceed 40 characters"
+                  } 
+                })} 
                 onChange={(e) => setTitle(e.target.value)}
-                isTextArea={false}
-                stringLength={70}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="title"
+                render={({ messages }: { message: string; messages?: MultipleFieldErrors | undefined; }) => {
+                  console.log("messages", messages);
+                  return messages
+                    ? Object.entries(messages).map(([, message]) => {
+                        const uniqueKey = uuidv4();
+                        return <ErrorComponent key={uniqueKey}>{message}</ErrorComponent>
+                      })
+                    : null;
+              }}
               />
           </div>
           <div className="mb-3">
               <label htmlFor="InputText2" className="form-label">Annotation:</label>
-              <InputValidator 
-                type= "text"
+              <textarea 
                 className="form-control"
                 id="InputText2"
                 value={annotation}
-                onChange={(e) => setAnnotation(e.target.value)}
-                isTextArea={true}
-                stringLength={255}
+                {...register("annotation", { 
+                  required: "Annotation is required.", 
+                  maxLength: {
+                    value: 150,
+                    message: "Annotation must exceed 150 characters"
+                  } 
+                })} 
                 rows={3}
+                onChange={(e) => setAnnotation(e.target.value)}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="annotation"
+                render={({ messages }: { message: string; messages?: MultipleFieldErrors | undefined; }) => {
+                  console.log("messages", messages);
+                  return messages
+                    ? Object.entries(messages).map(([message]) => {
+                      const uniqueKey = uuidv4();
+                      return <ErrorComponent key={uniqueKey}>{message}</ErrorComponent>
+                    })
+                    : null;
+                }}
               />
           </div>
           <div className="mb-3">
             <label htmlFor="InputText3" className="form-label">Text:</label>
-            <InputValidator 
-              className="form-control"
-              id="InputText3"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              isTextArea={true}
-              rows={10}
-            />
+              <textarea 
+                className="form-control"
+                id="InputText3"
+                value={text}
+                {...register("text", { 
+                  required: "This input is required.", 
+                  maxLength: {
+                    value: 10000,
+                    message: "This input must exceed 10000 characters"
+                  } 
+                })} 
+                rows={10}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="text"
+                render={({ messages }: { message: string; messages?: MultipleFieldErrors | undefined; }) => {
+                  console.log("messages", messages);
+                  return messages
+                    ? Object.entries(messages).map(([, message]) => {
+                      const uniqueKey = uuidv4();
+                      return <ErrorComponent key={uniqueKey}>{message}</ErrorComponent>
+                    })
+                    : null;
+                }}
+              />
           </div>
           <div className="d-flex justify-content-between align-items-center mb-3 mt-2">
             <div className='w-25 me-1'>
@@ -122,11 +187,28 @@ const CreatePost = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="InputFilm4" className="form-label">Preview Image:</label>
-            <input type="file" 
-              className="form-control" 
-              id="InputFilm4" 
-              onChange={(e) => setSelectedFile((e.target.files as FileList )[0])}
-            />
+            <input 
+                type= "file"
+                className="form-control"
+                id="InputText1"
+                {...register("file", { 
+                  required: "This input is required.", 
+                })} 
+                onChange={(e) => setSelectedFile((e.target.files as FileList )[0])}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="file"
+                render={({ messages }: { message: string; messages?: MultipleFieldErrors | undefined; }) => {
+                  console.log("messages", messages);
+                  return messages
+                    ? Object.entries(messages).map(([, message]) => {
+                      const uniqueKey = uuidv4();
+                      return <ErrorComponent key={uniqueKey}>{message}</ErrorComponent>
+                    })
+                    : null;
+                }}
+              />
           </div>
           <button type="submit" className="btn btn-primary">Send</button>
         </form>
