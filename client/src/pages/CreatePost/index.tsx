@@ -8,6 +8,7 @@ import classes from './styles.module.scss'
 import axios from 'axios';
 import TagsBody from '../../components/TagsBody';
 import ErrorComponent from '../../components/ErrorComponent';
+import DropFile from '../../components/DropFile';
 
 interface IFormInput {
   title: string
@@ -187,28 +188,14 @@ const CreatePost = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="InputFilm4" className="form-label">Preview Image:</label>
-            <input 
-                type= "file"
-                className="form-control"
-                id="InputText1"
-                {...register("file", { 
-                  required: "This input is required.", 
-                })} 
-                onChange={(e) => setSelectedFile((e.target.files as FileList )[0])}
-              />
-              <ErrorMessage
-                errors={errors}
-                name="file"
-                render={({ messages }: { message: string; messages?: MultipleFieldErrors | undefined; }) => {
-                  console.log("messages", messages);
-                  return messages
-                    ? Object.entries(messages).map(([, message]) => {
-                      const uniqueKey = uuidv4();
-                      return <ErrorComponent key={uniqueKey}>{message}</ErrorComponent>
-                    })
-                    : null;
-                }}
-              />
+            <DropFile 
+              selectedFile={selectedFile}
+              setSelectedFile={setSelectedFile}
+              inputProps={{
+                className: 'form-control',
+                id: 'InputText1',
+              }}
+            />
           </div>
           <button type="submit" className="btn btn-primary">Send</button>
         </form>

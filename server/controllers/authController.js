@@ -15,7 +15,7 @@ module.exports.login = async function(req, res) {
         email: candidate.email,
         username: candidate.username,
         userId: candidate.id
-      }, keys.jwt, { expiresIn: 3600 })
+      }, keys.jwt, { expiresIn: 360000 })
       res.status(200).json({
         token: token
       });
@@ -45,7 +45,7 @@ module.exports.register = async function(req, res) {
       email: newUser.email,
       username: newUser.username,
       userId: newUser.id
-    }, keys.jwt, { expiresIn: 3600 })
+    }, keys.jwt, { expiresIn: 360000 })
     res.status(200).json({
       token: token
     });
