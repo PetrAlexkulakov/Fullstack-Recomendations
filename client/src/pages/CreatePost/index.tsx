@@ -84,7 +84,7 @@ const CreatePost = () => {
                   required: "This input is required.", 
                   maxLength: {
                     value: 40,
-                    message: "This input must exceed 40 characters"
+                    message: "This input can`t exceed 40 characters"
                   } 
                 })} 
                 onChange={(e) => setTitle(e.target.value)}
@@ -100,7 +100,7 @@ const CreatePost = () => {
                         return <ErrorComponent key={uniqueKey}>{message}</ErrorComponent>
                       })
                     : null;
-              }}
+                  }}
               />
           </div>
           <div className="mb-3">
@@ -114,7 +114,7 @@ const CreatePost = () => {
                   required: "Annotation is required.", 
                   maxLength: {
                     value: 150,
-                    message: "Annotation must exceed 150 characters"
+                    message: "Annotation can`t exceed 150 characters"
                   } 
                 })} 
                 rows={3}
@@ -145,7 +145,7 @@ const CreatePost = () => {
                   required: "This input is required.", 
                   maxLength: {
                     value: 10000,
-                    message: "This input must exceed 10000 characters"
+                    message: "This input can`t exceed 10000 characters"
                   } 
                 })} 
                 rows={10}
