@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { MultipleFieldErrors, SubmitHandler, useForm } from 'react-hook-form';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import './util.scss';
 import './main.scss'
@@ -19,7 +19,7 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>({
+  const { register, formState: { errors }, setError, handleSubmit } = useForm<IFormInput>({
     criteriaMode: "all"
   })
   const navigation = useNavigate();
@@ -33,8 +33,25 @@ const Register = () => {
       localStorage.setItem('token', token);
       navigation('/')
     } catch (error) {
-      console.error('Register failed:', error);
-    }
+        if (axios.isAxiosError(error)) { //?
+          const axiosError = error as AxiosError;
+      
+          if (axiosError.response) {
+            const statusCode = axiosError.response.status;
+            const responseData = axiosError.response.data;
+      
+            console.error(`Request failed with status ${statusCode}:`, responseData);
+      
+            if (statusCode === 500) {
+                setError('email', { type: 'manual', message: 'This email doesn`t available' })
+            }
+          } else {
+            console.error('Network error:', axiosError.message);
+          }
+        } else {
+          console.error('Other error:', error);
+        }
+      }
   };
 
   return (
@@ -92,19 +109,9 @@ const Register = () => {
                             <span className="focus-input100"></span>
                             <span className="label-input100">Email</span>
                         </div>
-                        <ErrorMessage
-                            errors={errors}
-                            name="email"
-                            render={({ messages }: { message: string; messages?: MultipleFieldErrors | undefined; }) => {
-                            console.log("messages", messages);
-                            return messages
-                                ? Object.entries(messages).map(([, message]) => {
-                                    const uniqueKey = uuidv4();
-                                    return <ErrorComponent key={uniqueKey}>{message}</ErrorComponent>
-                                })
-                                : null;
-                            }}
-                        />
+                        {errors.email && (
+                            <ErrorComponent>{errors.email.message}</ErrorComponent>
+                        )}
                         <div className="wrap-input100 validate-input" data-validate="Password is required">
                             <input 
                                 className="input100" 
