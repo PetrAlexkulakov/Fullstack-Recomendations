@@ -2,7 +2,7 @@ import { Post } from "../../interfaces/Post";
 import { dataToString } from "../../shared/dataToString";
 // import ReactMarkdown from 'react-markdown';
 
-const Card = ({ post }: { post: Post }) => {
+const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) => {
   return (
     <>
       <div className="card-body d-flex flex-column justify-content-end align-items-center">
@@ -19,7 +19,10 @@ const Card = ({ post }: { post: Post }) => {
           className="card-text"
           children={post.smallText}
         /> */}
-        <a className="btn btn-primary" href={`/post/${post.id}`}>Read more →</a>
+        <div className="d-flex justify-content-around w-100">
+          <a className="btn btn-primary" href={`/post/${post.id}`}>Read more →</a>
+          {isAuthor && <a className="btn btn-primary" href={`/editPost/${post.id}`}>Edit</a>}
+        </div>
       </div>
     </>
   )

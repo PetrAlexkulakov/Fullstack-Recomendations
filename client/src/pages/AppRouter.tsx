@@ -8,6 +8,7 @@ import PrivateRoute from '../components/PrivateRoute';
 import Register from './Register';
 import Profile from './Profile';
 import CreatePost from './CreatePost';
+import EditPost from './EditPost';
 
 const AppRouter = () => {
   const [isAuthenticated] = useState(checkIsAuthenticated())
@@ -23,6 +24,7 @@ const AppRouter = () => {
         <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/createPost" element={<CreatePost />} />
+          <Route path="/editPost/:id" element={<EditPost />} />
         </Route>
       </Routes>
     </BrowserRouter>
@@ -31,5 +33,5 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (authorize) -> validation, comments, likes, raiting, admin, auth by socialMedia
+//todo (authorize) -> edit/delete post, comments, likes, raiting, admin, auth by socialMedia
 //todo translate

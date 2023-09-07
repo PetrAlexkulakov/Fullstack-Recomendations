@@ -52,7 +52,7 @@ const Profile = () => {
                 <h1>Hello, {username}!</h1>
             </div>
             <div className="row">
-                <Cards posts={posts} />
+                <Cards posts={posts} isAuthor={true} />
             </div>
         </div>
     </PageWrapper>

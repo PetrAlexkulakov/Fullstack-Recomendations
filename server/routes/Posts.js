@@ -49,22 +49,7 @@ router.post("/", upload.single('image'), async (req, res) => {
     const imageFile = req.file;
     const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
     
-    if (imageFile) {
-        const gc = new Storage({
-            keyFilename: keyPath,
-            projectId: 'sinuous-studio-376508'
-        });
-        const myBucket = gc.bucket('mybudget');
-    
-        const uniqueFileName = Date.now() + "_" + imageFile.originalname;
-    
-        myBucket.file(uniqueFileName).save(imageFile.buffer)
-    
-        post.imageURL = `https://storage.googleapis.com/mybudget/${uniqueFileName}`;
-    }
-    else {
-        post.imageURL = 'https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg'
-    }
+    post.imageURL = createImage(imageFile, keyPath)
 
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(' ')[1];
@@ -77,26 +62,102 @@ router.post("/", upload.single('image'), async (req, res) => {
 
         const tagsReq = req.body.tags.split(';')
 
-        if (tagsReq && Array.isArray(tagsReq)) {
-            for (const tagName of tagsReq) {
-                // Проверяем, существует ли тег с таким именем
-                const [tag, created] = await Tags.findOrCreate({
-                    where: { name: tagName }
-                });
+        await addTags(tagsReq, createdPost)
 
-                if (!created) {
-                    // Если тег уже существует, просто добавляем пост в этот тег
-                    await createdPost.addTag(tag);
-                } else {
-                    // Если тег только что создан, добавляем его и связываем с постом
-                    await createdPost.addTags(tag);
-                }
-            }
-        }
         res.json(post);
     } else {
         res.status(401).json({ error: 'Unauthorized' })
     }
 });
+
+router.put('/:id', upload.single('image'), async (req, res) => {
+  const id = req.params.id;
+  const postData = req.body;
+  const imageFile = req.file;
+  const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
+
+  const existingPost = await Posts.findByPk(id);
+  
+  if (!existingPost) {
+    return res.status(404).json({ error: 'Post not found' });
+  }
+
+  if (req.headers.authorization) {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, keys.jwt);
+    const { userId } = decodedToken;
+
+    if (existingPost.userId !== userId) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
+    await deleteFileFromStorage(existingPost.imageURL, keyPath)
+    postData.imageURL = createImage(imageFile, keyPath)//todo delete image from google
+
+    await existingPost.update(postData);
+
+    await existingPost.setTags([]);
+    const tagsReq = req.body.tags.split(';')
+
+    await addTags(tagsReq, existingPost)
+
+    res.json(existingPost);
+  } else {
+    res.status(401).json({ error: 'Unauthorized' });
+  }
+});
+
+function createImage(imageFile, keyPath) {
+    if (imageFile) {
+        const gc = new Storage({
+            keyFilename: keyPath,
+            projectId: 'sinuous-studio-376508'
+        });
+        const myBucket = gc.bucket('mybudget');
+    
+        const uniqueFileName = Date.now() + "_" + imageFile.originalname;
+    
+        myBucket.file(uniqueFileName).save(imageFile.buffer)
+    
+        return `https://storage.googleapis.com/mybudget/${uniqueFileName}`;
+    }
+    else {
+        return 'https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg'
+    }
+}
+
+async function addTags(tagsReq, createdPost) {
+    if (tagsReq && Array.isArray(tagsReq)) {
+        for (const tagName of tagsReq) {
+            // Проверяем, существует ли тег с таким именем
+            const [tag, created] = await Tags.findOrCreate({
+                where: { name: tagName }
+            });
+
+            if (!created) {
+                // Если тег уже существует, просто добавляем пост в этот тег
+                await createdPost.addTag(tag);
+            } else {
+                // Если тег только что создан, добавляем его и связываем с постом
+                await createdPost.addTags(tag);
+            }
+        }
+    }
+}
+
+async function deleteFileFromStorage(imageURL, keyPath) {
+    const gc = new Storage({
+        keyFilename: keyPath,
+        projectId: 'sinuous-studio-376508'
+    });
+    const myBucket = gc.bucket('mybudget');
+    const file = myBucket.file(imageURL.replace('https://storage.googleapis.com/mybudget/', ''));
+
+    file.delete().then(() => {
+        console.log(`Файл ${imageURL} успешно удален.`);
+    }).catch((err) => {
+        console.error(`Ошибка при удалении файла ${imageURL}:`, err);
+    });
+}
 
 module.exports = router
