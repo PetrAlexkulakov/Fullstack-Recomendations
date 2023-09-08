@@ -59,7 +59,9 @@ const CreatePost = () => {
           Authorization: `Bearer ${token}`,
         },
       }).then(() => {
-        navigate("/profile");
+        setTimeout(() => {
+          navigate("/profile");
+        }, 100)
       });
     } catch(error) {
       console.error("Error sending data:", error);

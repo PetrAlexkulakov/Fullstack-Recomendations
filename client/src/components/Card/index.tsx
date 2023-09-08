@@ -1,8 +1,21 @@
 import { Post } from "../../interfaces/Post";
 import { dataToString } from "../../shared/dataToString";
+import axios from "axios";
 // import ReactMarkdown from 'react-markdown';
 
 const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) => {
+  const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
+
+  const deletePost = () => {
+    const token = localStorage.getItem('token');
+    axios.delete(baseURL + "/posts/" + post.id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(() => {
+      window.location.reload();
+    })
+  }
   return (
     <>
       <div className="card-body d-flex flex-column justify-content-end align-items-center">
@@ -20,6 +33,7 @@ const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) =>
           children={post.smallText}
         /> */}
         <div className="d-flex justify-content-around w-100">
+          {isAuthor && <button className="btn btn-primary" onClick={deletePost}>Delete</button>}
           <a className="btn btn-primary" href={`/post/${post.id}`}>Read more →</a>
           {isAuthor && <a className="btn btn-primary" href={`/editPost/${post.id}`}>Edit</a>}
         </div>
