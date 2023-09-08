@@ -27,7 +27,7 @@ const EditPost = () => {
   const [tag, setTag] = useState<string | null>(null);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>({
+  const { register, formState: { errors }, setError, handleSubmit } = useForm<IFormInput>({
     criteriaMode: "all",
     defaultValues: { 
       title: 'The title of the article',
@@ -220,6 +220,21 @@ const EditPost = () => {
               inputProps={{
                 className: 'form-control',
                 id: 'InputText1',
+              }}
+              setError={setError}
+              errors={errors}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="file"
+              render={({ messages }: { message: string; messages?: MultipleFieldErrors | undefined; }) => {
+                console.log("messages", messages);
+                return messages
+                  ? Object.entries(messages).map(([, message]) => {
+                    const uniqueKey = uuidv4();
+                    return <ErrorComponent key={uniqueKey}>{message}</ErrorComponent>
+                  })
+                  : null;
               }}
             />
           </div>

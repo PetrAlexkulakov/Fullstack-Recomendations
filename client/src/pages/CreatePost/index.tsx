@@ -25,7 +25,7 @@ const CreatePost = () => {
   const [tag, setTag] = useState<string | null>(null);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { register, formState: { errors }, handleSubmit } = useForm<IFormInput>({
+  const { register, formState: { errors }, setError, handleSubmit } = useForm<IFormInput>({
     criteriaMode: "all"
   })
   const navigate = useNavigate();
@@ -200,6 +200,8 @@ const CreatePost = () => {
                 className: 'form-control',
                 id: 'InputText1',
               }}
+              setError={setError}
+              errors={errors}
             />
           </div>
           <button type="submit" className="btn btn-primary">Send</button>
