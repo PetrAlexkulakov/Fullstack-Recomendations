@@ -27,7 +27,7 @@ const EditPost = () => {
   const [tag, setTag] = useState<string | null>(null);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { register, formState: { errors }, setError, handleSubmit } = useForm<IFormInput>({
+  const { register, formState: { errors }, setError, clearErrors, handleSubmit } = useForm<IFormInput>({
     criteriaMode: "all",
     defaultValues: { 
       title: 'The title of the article',
@@ -223,19 +223,7 @@ const EditPost = () => {
               }}
               setError={setError}
               errors={errors}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="file"
-              render={({ messages }: { message: string; messages?: MultipleFieldErrors | undefined; }) => {
-                console.log("messages", messages);
-                return messages
-                  ? Object.entries(messages).map(([, message]) => {
-                    const uniqueKey = uuidv4();
-                    return <ErrorComponent key={uniqueKey}>{message}</ErrorComponent>
-                  })
-                  : null;
-              }}
+              clearErrors={clearErrors}
             />
           </div>
           <div className="d-flex justify-content-around">

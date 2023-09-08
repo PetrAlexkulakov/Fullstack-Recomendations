@@ -2,14 +2,15 @@
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import ErrorComponent from '../ErrorComponent';
-import { FieldErrors, UseFormSetError, ValidateResult } from 'react-hook-form';
+import { FieldErrors, UseFormClearErrors, UseFormSetError, ValidateResult } from 'react-hook-form';
 
-const DropFile = ({selectedFile, setSelectedFile, inputProps, setError, errors }: {
+const DropFile = ({selectedFile, setSelectedFile, inputProps, setError, errors, clearErrors }: {
     selectedFile: File | null,
     setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>,
     inputProps: any,
     setError: UseFormSetError<any>,
     errors: FieldErrors<any>,
+    clearErrors: UseFormClearErrors<any>
   }) => {
   const onDrop = useCallback((acceptedFiles: any) => {
     const acceptedFormats = ['jpg', 'png', 'jpeg'];
@@ -17,10 +18,10 @@ const DropFile = ({selectedFile, setSelectedFile, inputProps, setError, errors }
     if (!acceptedFormats.includes(fileExtension)) {
       setError('file', { type: 'manual', message: 'Wrong file extension' })
     } else {
-      setError('file', {})
+      clearErrors('file')
     }
     setSelectedFile(acceptedFiles[0])
-  }, [setError, setSelectedFile]);
+  }, [clearErrors, setError, setSelectedFile]);
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (

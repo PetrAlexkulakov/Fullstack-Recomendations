@@ -33,5 +33,5 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (authorize) -> (img validation), comments, likes, raiting, admin, auth by socialMedia
+//todo (edit post img) comments, likes, raiting, admin, auth by socialMedia
 //todo translate

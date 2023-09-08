@@ -49,7 +49,7 @@ router.post("/", upload.single('image'), async (req, res) => {
     const imageFile = req.file;
     const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
     
-    post.imageURL = createImage(imageFile, keyPath)
+    post.imageURL = await createImage(imageFile, keyPath)
 
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(' ')[1];
@@ -92,7 +92,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     }
 
     await deleteFileFromStorage(existingPost.imageURL, keyPath)
-    postData.imageURL = createImage(imageFile, keyPath)
+    postData.imageURL = await createImage(imageFile, keyPath)
 
     await existingPost.update(postData);
 
@@ -140,7 +140,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-function createImage(imageFile, keyPath) {
+async function createImage(imageFile, keyPath) {
     if (imageFile) {
         const gc = new Storage({
             keyFilename: keyPath,
@@ -150,12 +150,12 @@ function createImage(imageFile, keyPath) {
     
         const uniqueFileName = Date.now() + "_" + imageFile.originalname;
     
-        myBucket.file(uniqueFileName).save(imageFile.buffer)
+        await myBucket.file(uniqueFileName).save(imageFile.buffer)
     
         return `https://storage.googleapis.com/mybudget/${uniqueFileName}`;
     }
     else {
-        return 'https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg'
+        return 'https://storage.googleapis.com/mybudget/jk-placeholder-image.jpg'
     }
 }
 
@@ -176,18 +176,20 @@ async function addTags(tagsReq, createdPost) {
 }
 
 async function deleteFileFromStorage(imageURL, keyPath) {
-    const gc = new Storage({
-        keyFilename: keyPath,
-        projectId: 'sinuous-studio-376508'
-    });
-    const myBucket = gc.bucket('mybudget');
-    const file = myBucket.file(imageURL.replace('https://storage.googleapis.com/mybudget/', ''));
-
-    file.delete().then(() => {
-        console.log(`Файл ${imageURL} успешно удален.`);
-    }).catch((err) => {
-        console.error(`Ошибка при удалении файла ${imageURL}:`, err);
-    });
+    if (imageURL !== 'https://storage.googleapis.com/mybudget/jk-placeholder-image.jpg') {
+        const gc = new Storage({
+            keyFilename: keyPath,
+            projectId: 'sinuous-studio-376508'
+        });
+        const myBucket = gc.bucket('mybudget');
+        const file = myBucket.file(imageURL.replace('https://storage.googleapis.com/mybudget/', ''));
+    
+        file.delete().then(() => {
+            console.log(`Файл ${imageURL} успешно удален.`);
+        }).catch((err) => {
+            console.error(`Ошибка при удалении файла ${imageURL}:`, err);
+        });
+    }
 }
 
 module.exports = router

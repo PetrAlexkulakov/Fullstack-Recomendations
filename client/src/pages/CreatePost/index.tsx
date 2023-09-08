@@ -25,7 +25,7 @@ const CreatePost = () => {
   const [tag, setTag] = useState<string | null>(null);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { register, formState: { errors }, setError, handleSubmit } = useForm<IFormInput>({
+  const { register, formState: { errors }, setError, clearErrors, handleSubmit } = useForm<IFormInput>({
     criteriaMode: "all"
   })
   const navigate = useNavigate();
@@ -59,9 +59,7 @@ const CreatePost = () => {
           Authorization: `Bearer ${token}`,
         },
       }).then(() => {
-        setTimeout(() => {
-          navigate("/profile");
-        }, 100)
+        navigate("/profile");
       });
     } catch(error) {
       console.error("Error sending data:", error);
@@ -202,6 +200,7 @@ const CreatePost = () => {
               }}
               setError={setError}
               errors={errors}
+              clearErrors={clearErrors}
             />
           </div>
           <button type="submit" className="btn btn-primary">Send</button>

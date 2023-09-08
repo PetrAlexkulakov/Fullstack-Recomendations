@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
         },
         userId: {
-            type: DataTypes.INTEGER, // Предполагаемый тип данных для userId
+            type: DataTypes.INTEGER, 
             allowNull: true,
         },
     })
