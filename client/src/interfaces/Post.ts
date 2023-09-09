@@ -7,4 +7,5 @@ export interface Post {
     createdAt: string
     group: string
     tags: string
+    likesCount: string
 }

@@ -21,10 +21,12 @@ const postsRouter = require('./routes/Posts')
 const tagsRouter = require('./routes/Tags')
 const usersRouter = require('./routes/Users')
 const authRoutes = require('./routes/auth');
+const likeRoutes = require('./routes/Likes')
 app.use("/posts", postsRouter)
 app.use("/tags", tagsRouter)
 app.use("/users", usersRouter)
 app.use('/auth', authRoutes);
+app.use('/likes', likeRoutes);
 
 db.sequelize.sync().then(() => {
     app.listen(process.env.PORT || 3001, () => {

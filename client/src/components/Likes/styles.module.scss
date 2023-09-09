@@ -1,0 +1,22 @@
+.like {
+    background-image: url('../../assets/like.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    //todo improve design
+}
+
+.liked {
+    background-image: url('../../assets/like-blue.svg');
+}
+
+.btnLiked {
+    border: 2px solid blue;
+}
+
+.btnUnLiked {
+    border: 2px solid rgba(0, 0, 255, 0);
+}

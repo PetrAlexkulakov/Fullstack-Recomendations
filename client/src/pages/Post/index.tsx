@@ -5,6 +5,7 @@ import axios from "axios";
 import ReactMarkdown from 'react-markdown';
 import { dataToString } from "../../shared/dataToString";
 import PageWrapper from "../../components/PageWrapper";
+import Likes from "../../components/Likes";
 
 const Post = () => {
   const { id } = useParams();
@@ -31,6 +32,7 @@ const Post = () => {
                     <div className="badge bg-secondary text-decoration-none link-light w-25">{post.group}</div>
                 </header>
                 <figure className="mb-4"><img className="img-fluid rounded" src={post.imageURL} alt="..." /></figure>
+                <div className="d-flex justify-content-around"><Likes post={post} /></div>
                 <section className="mb-5" style={{textAlign: "left"}}>
                     {post.fullText.split('\n').map((paragraph, index) => (
                         <ReactMarkdown 

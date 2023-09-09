@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER, 
             allowNull: true,
         },
+        likesCount: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
     })
 
     Posts.associate = (models) => {
@@ -40,6 +44,11 @@ module.exports = (sequelize, DataTypes) => {
             through: "PostTags", // Промежуточная таблица для хранения связей
             foreignKey: "postId", // Внешний ключ в таблице PostTags, связывающий с таблицей Posts
             as: 'Tags',
+        });
+
+        Posts.hasMany(models.Likes, {
+            foreignKey: "postId", // Внешний ключ в таблице Likes, связывающий с таблицей Posts
+            as: 'likes', // Указываем алиас для связи
         });
     };
 

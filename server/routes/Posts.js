@@ -11,6 +11,8 @@ const { Posts } = require('../models')
 const { Tags } = require('../models')
 const addQuerys = require('../controllers/addQuerys');
 
+const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
+
 router.get('/', async (req, res) => {
     let whereCondition = {};  
 
@@ -47,7 +49,7 @@ router.get('/:id', async (req, res) => {
 router.post("/", upload.single('image'), async (req, res) => {
     const post = req.body;
     const imageFile = req.file;
-    const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
+    
     
     post.imageURL = await createImage(imageFile, keyPath)
 
@@ -74,7 +76,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
   const id = req.params.id;
   const postData = req.body;
   const imageFile = req.file;
-  const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
+  
 
   const existingPost = await Posts.findByPk(id);
   
@@ -109,7 +111,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const id = req.params.id;
-  const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
+  
 
   const existingPost = await Posts.findByPk(id);
 
