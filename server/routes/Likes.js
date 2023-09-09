@@ -56,13 +56,11 @@ router.post('/:postId/like', async (req, res) => {
         return res.status(200).json({ message: 'Like removed successfully', action: 'remove' });
       }
   
-      // Создаем новый лайк
       await Likes.create({
         postId,
         userId,
       });
   
-      // Увеличиваем счетчик лайков для поста
       const post = await Posts.findByPk(postId);
       if (post) {
         post.likesCount += 1;

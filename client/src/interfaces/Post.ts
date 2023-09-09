@@ -8,4 +8,5 @@ export interface Post {
     group: string
     tags: string
     likesCount: string
+    raiting: string
 }

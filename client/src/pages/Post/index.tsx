@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import { dataToString } from "../../shared/dataToString";
 import PageWrapper from "../../components/PageWrapper";
 import Likes from "../../components/Likes";
+import Ratings from "../../components/Raitings";
 
 const Post = () => {
   const { id } = useParams();
@@ -25,24 +26,30 @@ const Post = () => {
     <PageWrapper>
         <div className="col-lg-8">
             {post && 
-            <article>
-                <header className="mb-4">
-                    <h1 className="fw-bolder mb-1">Welcome to Blog Post!</h1>
-                    <div className="text-muted fst-italic mb-2">{dataToString(post.createdAt)}</div>
-                    <div className="badge bg-secondary text-decoration-none link-light w-25">{post.group}</div>
-                </header>
-                <figure className="mb-4"><img className="img-fluid rounded" src={post.imageURL} alt="..." /></figure>
-                <div className="d-flex justify-content-around"><Likes post={post} /></div>
-                <section className="mb-5" style={{textAlign: "left"}}>
-                    {post.fullText.split('\n').map((paragraph, index) => (
-                        <ReactMarkdown 
-                            key={index} 
-                            className="fs-5 mb-4"
-                            children={paragraph} 
-                        />
-                    ))}
-                </section>
-            </article> 
+                <article>
+                    <header className="mb-4 d-flex flex-column align-items-center">
+                        <h1 className="fw-bolder mb-1">Welcome to Blog Post!</h1>
+                        <div className="d-flex justify-content-around gap-3 w-100">
+                            <Ratings post={post} />
+                            <div className="badge bg-secondary text-decoration-none link-light">{post.group}</div>
+                            <div className="text-muted fst-italic mb-2">{dataToString(post.createdAt)}</div>
+                        </div>
+                    </header>
+                    <figure className="mb-4"><img className="img-fluid rounded" src={post.imageURL} alt="..." /></figure>
+                    <section className="mb-5" style={{textAlign: "left"}}>
+                        {post.fullText.split('\n').map((paragraph, index) => (
+                            <ReactMarkdown 
+                                key={index} 
+                                className="fs-5 mb-4"
+                                children={paragraph} 
+                            />
+                        ))}
+                    </section>
+                    <div className="d-flex justify-content-around align-items-center gap-3">
+                        <Ratings post={post} canChange={true} />
+                        <div className="d-flex justify-content-around"><Likes post={post} /></div>
+                    </div>
+                </article> 
             }
             {/* <!-- Comments section-->
             <section className="mb-5">

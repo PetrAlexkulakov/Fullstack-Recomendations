@@ -33,7 +33,7 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (edit post img) comments, likes, raiting, admin, auth by socialMedia
+//todo (edit post img) comments, raiting, admin, auth by socialMedia
 //todo translate
 
 // Каждый пользовать может проставить "рейтинг" (1..5 звезд) произведению 

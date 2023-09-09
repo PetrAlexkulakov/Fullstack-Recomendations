@@ -32,6 +32,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
+        raiting: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        }
     })
 
     Posts.associate = (models) => {
@@ -49,6 +53,10 @@ module.exports = (sequelize, DataTypes) => {
         Posts.hasMany(models.Likes, {
             foreignKey: "postId", // Внешний ключ в таблице Likes, связывающий с таблицей Posts
             as: 'likes', // Указываем алиас для связи
+        });
+        Posts.hasMany(models.Raitings, {
+            foreignKey: "postId", // Внешний ключ в таблице Likes, связывающий с таблицей Posts
+            as: 'raitings', // Указываем алиас для связи
         });
     };
 
