@@ -7,7 +7,6 @@ import axios from "axios";
 
 const Ratings = ({ post, canChange = false }: { post: Post, canChange?: boolean }) => {
   const initialRating = Number(post.raiting);
-//   const [rating, setRating] = useState(initialRating);
   const [userRating, setUserRating] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hoveredRating, setHoveredRating] = useState(5);
@@ -16,13 +15,14 @@ const Ratings = ({ post, canChange = false }: { post: Post, canChange?: boolean 
 
   useEffect(() => {
     // Запрос на сервер для получения текущей оценки пользователя
-    if (canChange) {
+    if (canChange && token) {
       axios.get(`${baseURL}/raitings/${post.id}/user-rating`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }).then((res) => {
         setUserRating(res.data.rating || 0);
+        setHoveredRating(res.data.rating || 0);
       });
     }
   }, [canChange, post.id, token, baseURL]);
@@ -32,7 +32,7 @@ const Ratings = ({ post, canChange = false }: { post: Post, canChange?: boolean 
   }
 
   const handleStarClick = (starIndex: number) => {
-    if (isLoading) {
+    if (isLoading || !token) {
         return;
     }
   
@@ -44,10 +44,10 @@ const Ratings = ({ post, canChange = false }: { post: Post, canChange?: boolean 
         },
     }).then(() => {
       // Обновление оценки пользователя и состояния загрузки
-      setUserRating(newRating);
+      setUserRating(newRating)
+      setHoveredRating(newRating);
       setIsLoading(false);
     }).catch((error) => {
-      // Обработка ошибок при отправке запроса
       console.error('Error while saving rating:', error);
       setIsLoading(false);
     });
@@ -60,21 +60,21 @@ const Ratings = ({ post, canChange = false }: { post: Post, canChange?: boolean 
   };
 
   const handleStarMouseLeave = () => {
-    setHoveredRating(5);
+    setHoveredRating(userRating);
   };
 
   let solidStarsCount = Math.round(initialRating);
   let emptyStarsCount = 5 - solidStarsCount;
 
   if (canChange) {
-    solidStarsCount = 0;//todo
+    solidStarsCount = hoveredRating;
     emptyStarsCount = 5 - solidStarsCount;
   }
 
   const firstStars = Array.from({ length: solidStarsCount }, (_, index) => canChange ? (
     <img
       key={`solidStar-${index}`}
-      src={emptyStar}
+      src={star}
       alt="Solid Star"
       className={classes.star}
       onClick={() => handleStarClick(index)}
@@ -92,11 +92,11 @@ const Ratings = ({ post, canChange = false }: { post: Post, canChange?: boolean 
       alt="Empty Star"
       className={classes.star}
       onClick={() => handleStarClick(solidStarsCount + index)}
-      onMouseEnter={() => handleStarMouseEnter(solidStarsCount + index)}
+      onMouseEnter={() => handleStarMouseEnter(solidStarsCount + index)}//? here?
       onMouseLeave={handleStarMouseLeave}
     />
     ) : (
-    <img key={`emptyStar-${index}`} className={classes.star} src={emptyStar} alt="Solid Star"  />
+    <img key={`emptyStar-${index}`} className={classes.star} src={emptyStar} alt="Solid Star" />
   ));
 
   return (

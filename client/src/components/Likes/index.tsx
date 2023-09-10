@@ -10,29 +10,33 @@ const Likes = ({ post }: { post: Post }) => {
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
   const handleClick = () => {
-    axios.post(`${baseURL}/likes/${post.id}/like`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-    }).then((res) => {
-        if (res.data.action === 'add') {
-            setLikesCount(likesCount + 1);
-            setIsLiked(true);
-        } else {
-            setLikesCount(likesCount - 1);
-            setIsLiked(false);
-        }
-    });
+    if (token) {
+      axios.post(`${baseURL}/likes/${post.id}/like`, null, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }).then((res) => {
+          if (res.data.action === 'add') {
+              setLikesCount(likesCount + 1);
+              setIsLiked(true);
+          } else {
+              setLikesCount(likesCount - 1);
+              setIsLiked(false);
+          }
+      });
+    }
   }
 
   useEffect(() => {
-    axios.get(`${baseURL}/likes/${post.id}/liked`, {
+    if (token) {
+      axios.get(`${baseURL}/likes/${post.id}/liked`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
     }).then((res) => { 
         setIsLiked(res.data.liked);
     })
+    }
   })
   return (
     <button className={`d-flex p-0 align-items-end gap-1 
