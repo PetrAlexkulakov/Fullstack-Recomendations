@@ -3,11 +3,12 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const keys = require('../keys');
 const { Posts, Raitings, Users } = require('../models');
+const { checkAuth } = require('../controllers/checkAuth');
 
 router.get('/:postId/user-rating', async (req, res) => {
   const { postId } = req.params;
 
-  if (req.headers.authorization) {
+  if (checkAuth(req.headers.authorization)) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, keys.jwt);
     const { userId } = decodedToken;
@@ -38,7 +39,7 @@ router.post('/:postId/rating', async (req, res) => {
     return res.status(400).json({ error: 'Invalid rating value' });
   }
 
-  if (req.headers.authorization) {
+  if (checkAuth(req.headers.authorization)) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, keys.jwt);
     const { userId } = decodedToken;

@@ -3,11 +3,12 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const keys = require('../keys');
 const { Posts, Likes } = require('../models');
+const { checkAuth } = require('../controllers/checkAuth');
 
 router.get('/:postId/liked', async (req, res) => {
   const { postId } = req.params;
 
-  if (req.headers.authorization) {
+  if (checkAuth(req.headers.authorization)) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, keys.jwt);
     const { userId } = decodedToken;
@@ -32,7 +33,7 @@ router.get('/:postId/liked', async (req, res) => {
 router.post('/:postId/like', async (req, res) => {
     const { postId } = req.params;
   
-    if (req.headers.authorization) {
+    if (checkAuth(req.headers.authorization)) {
       const token = req.headers.authorization.split(' ')[1];
       const decodedToken = jwt.verify(token, keys.jwt);
       const { userId } = decodedToken;

@@ -43,7 +43,6 @@ const Ratings = ({ post, canChange = false }: { post: Post, canChange?: boolean 
           Authorization: `Bearer ${token}`,
         },
     }).then(() => {
-      // Обновление оценки пользователя и состояния загрузки
       setUserRating(newRating)
       setHoveredRating(newRating);
       setIsLoading(false);

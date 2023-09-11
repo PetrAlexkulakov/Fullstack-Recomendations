@@ -10,6 +10,7 @@ const {Storage} = require('@google-cloud/storage')
 const { Posts } = require('../models')
 const { Tags } = require('../models')
 const addQuerys = require('../controllers/addQuerys');
+const { checkAuth } = require('../controllers/checkAuth');
 
 const keyPath = path.join(__dirname, "../sinuous-studio-376508-4fbe736302a0.json")
 
@@ -53,7 +54,7 @@ router.post("/", upload.single('image'), async (req, res) => {
     
     post.imageURL = await createImage(imageFile, keyPath)
 
-    if (req.headers.authorization) {
+    if (checkAuth(req.headers.authorization)) {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, keys.jwt);
         const { userId } = decodedToken;
@@ -84,7 +85,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     return res.status(404).json({ error: 'Post not found' });
   }
 
-  if (req.headers.authorization) {
+  if (checkAuth(req.headers.authorization)) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, keys.jwt);
     const { userId } = decodedToken;
@@ -119,7 +120,7 @@ router.delete('/:id', async (req, res) => {
     return res.status(404).json({ error: 'Post not found' });
   }
 
-  if (req.headers.authorization) {
+  if (checkAuth(req.headers.authorization)) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, keys.jwt);
     const { userId } = decodedToken;

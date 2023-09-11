@@ -40,23 +40,29 @@ module.exports = (sequelize, DataTypes) => {
 
     Posts.associate = (models) => {
         Posts.belongsTo(models.Users, {
-            foreignKey: "userId", // Внешний ключ в таблице Posts, связанный с таблицей Users
-            as: 'author', // Указываем алиас для связи
+            foreignKey: "userId", 
+            as: 'author', 
         });
-        // Определение связи "многие-ко-многим" между постами и тегами
+
         Posts.belongsToMany(models.Tags, {
-            through: "PostTags", // Промежуточная таблица для хранения связей
-            foreignKey: "postId", // Внешний ключ в таблице PostTags, связывающий с таблицей Posts
+            through: "PostTags", 
+            foreignKey: "postId", 
             as: 'Tags',
         });
 
         Posts.hasMany(models.Likes, {
-            foreignKey: "postId", // Внешний ключ в таблице Likes, связывающий с таблицей Posts
-            as: 'likes', // Указываем алиас для связи
+            foreignKey: "postId",
+            as: 'likes', 
         });
         Posts.hasMany(models.Raitings, {
-            foreignKey: "postId", // Внешний ключ в таблице Likes, связывающий с таблицей Posts
-            as: 'raitings', // Указываем алиас для связи
+            foreignKey: "postId", 
+            as: 'raitings',
+        });
+
+        // Добавляем связь с комментариями
+        Posts.hasMany(models.Comments, {
+            foreignKey: "postId",
+            as: "comments",
         });
     };
 
