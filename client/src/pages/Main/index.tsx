@@ -26,7 +26,7 @@ const Main = () => {
   }, [baseURL, quertParams.group, quertParams.search, quertParams.tags])
 
   return (
-    <PageWrapper isMain={true}>
+    <PageWrapper isFull={true}>
         <div className="col-lg-8">
             <div className="card mb-4">
                 {posts.length > 0 && 

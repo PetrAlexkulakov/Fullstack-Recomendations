@@ -4,7 +4,7 @@ import Search from "./Search"
 import Tags from "./Tags"
 import Navbar from "../Navbar"
 
-const PageWrapper = ({ children, isMain }: { children: ReactNode, isMain?: boolean } ) => {
+const PageWrapper = ({ children, isFull, isProfile = false }: { children: ReactNode, isFull?: boolean, isProfile?: boolean } ) => {
     return (
     <>
       <Navbar />
@@ -17,11 +17,11 @@ const PageWrapper = ({ children, isMain }: { children: ReactNode, isMain?: boole
               <div className="card mb-4">
                   <div className="card-header">Search</div>
                   <div className="card-body">
-                    <Search />
+                    <Search isProfile={isProfile} />
                   </div>
               </div>
               {/* <!-- Groups widget--> */}
-              {isMain && 
+              {isFull && 
                 <>
                     <div className="card mb-4">
                         <div className="card-header">Groups</div>

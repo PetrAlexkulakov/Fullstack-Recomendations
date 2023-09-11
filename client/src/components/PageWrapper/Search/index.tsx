@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import queryString from 'query-string';
 import { useState } from "react";
 
-const Search = () => {
+const Search = ({ isProfile }: { isProfile?: boolean }) => {
   const location = useLocation();
   const queryParams = queryString.parse(location.search)
   const activeSearch = queryParams.search;
@@ -26,7 +26,12 @@ const Search = () => {
         search: undefined
       };
     }
-    navigator(`?` + queryString.stringify(newQueryParams));
+
+    if (isProfile) {
+      navigator(`/profile/?` + queryString.stringify(newQueryParams));
+    } else {
+      navigator(`/?` + queryString.stringify(newQueryParams));
+    }
   };
 
   return (

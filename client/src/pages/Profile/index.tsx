@@ -40,7 +40,7 @@ const Profile = () => {
   
   
   return (
-    <PageWrapper isMain={true}>
+    <PageWrapper isFull={true} isProfile={true}>
         <div className="col-lg-8 pt-2">
             <a href="/createPost" className={classes.btnAddPost}>
                 <div className={classes.centeredContent}>
