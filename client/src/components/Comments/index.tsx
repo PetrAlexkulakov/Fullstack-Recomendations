@@ -36,20 +36,26 @@ const Comments = ({ post }: { post: Post }) => {
       setComments(res.data);
     })
   }, [baseURL, post.id])
-  
+
   return (
-    <div className="card bg-light">
-        <div className="card-body pe-0" style={{}}>
-            {token &&             
-                <NewComment post={post} socket={socket} />
-            }
-            <div className="d-flex mb-4 flex-column">
-                {comments.map((comm, index) => (
-                    <Comment key={index} comment={comm} />
-                ))}
+    <>
+        {(token || comments.length > 0) &&
+            <div className="card bg-light">
+                <div className="card-body pe-0 pb-0" style={{}}>
+                    {token &&             
+                        <NewComment post={post} socket={socket} />
+                    }
+                    {comments.length > 0 &&
+                        <div className="d-flex  flex-column">
+                            {comments.map((comm, index) => (
+                                <Comment key={index} comment={comm} />
+                            ))}
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
-    </div>
+        }
+    </>
   )
 }
 

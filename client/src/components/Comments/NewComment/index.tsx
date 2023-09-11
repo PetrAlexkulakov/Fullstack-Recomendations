@@ -1,5 +1,4 @@
 import { FormEvent, useState } from "react";
-// import axios from "axios";
 import { Post } from "../../../interfaces/Post";
 import { Socket } from "socket.io-client";
 
@@ -7,23 +6,13 @@ import { Socket } from "socket.io-client";
 const NewComment = ({ post, socket }: { post: Post, socket: Socket<any, any> }) => {
   const [text, setText] = useState("");
   const token = localStorage.getItem('token');
-//   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if(text) {
-        // Отправляем новый комментарий на сервер
         socket.emit('sendComment', { postId: post.id, comment: text, token });
-        // axios.post(`${baseURL}/comments/comments/${post.id}`,{
-        //     text: text
-        // }, {
-        //     headers: {
-        //       Authorization: `Bearer ${token}`,
-        //     },
-        // }).then(() => {
-        //     setText("")
-        // })
+        setText("");
     }
   }
 
