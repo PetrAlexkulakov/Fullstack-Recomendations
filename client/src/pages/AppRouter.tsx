@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Main from './Main';
 import Post from './Post';
 import Auth from './Auth';
@@ -9,9 +9,22 @@ import Register from './Register';
 import Profile from './Profile';
 import CreatePost from './CreatePost';
 import EditPost from './EditPost';
+import { checkIsAdmin } from '../shared/authentification/isAdmin';
+import Admin from './Admin';
 
 const AppRouter = () => {
   const [isAuthenticated] = useState(checkIsAuthenticated())
+  const [isAdmin, setIsAdmin] = useState(true);
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      const isAdminStatus = await checkIsAdmin();
+      setIsAdmin(isAdminStatus);
+    };
+
+    checkAdminStatus();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -26,6 +39,9 @@ const AppRouter = () => {
           <Route path="/createPost" element={<CreatePost />} />
           <Route path="/editPost/:id" element={<EditPost />} />
         </Route>
+        <Route element={<PrivateRoute isAuthenticated={isAdmin} redirectPath={'/'} />}>
+          <Route path="/admin-panel" element={<Admin />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
@@ -33,5 +49,11 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (edit post img) admin, auth by socialMedia
+//todo (edit post img) (tags, comment search) admin, auth by socialMedia
 //todo translate
+
+// Аутентифицированные пользователи имеют доступ ко всему, кроме админки. 
+// В базовом варианте админка представляет собой список пользователей (как ссылок на их страницы). 
+
+// Администратор видит каждую страницу пользователя и каждый "обзор" как ее создатель 
+// (например, может отредактировать или создать от имени пользователя с его страницы новый "обзор").

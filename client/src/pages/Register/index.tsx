@@ -19,6 +19,7 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
   const { register, formState: { errors }, setError, handleSubmit } = useForm<IFormInput>({
     criteriaMode: "all"
   })
@@ -27,13 +28,13 @@ const Register = () => {
 
   const handleRegister: SubmitHandler<IFormInput> = async () => {
     try {
-      const response = await axios.post(baseURL + '/auth/register', { email, password, username });
+      const response = await axios.post(baseURL + '/auth/register', { email, password, username, isAdmin });
       const token = response.data.token;
 
       localStorage.setItem('token', token);
       navigation('/')
     } catch (error) {
-        if (axios.isAxiosError(error)) { //?
+        if (axios.isAxiosError(error)) {
           const axiosError = error as AxiosError;
       
           if (axiosError.response) {
@@ -141,6 +142,19 @@ const Register = () => {
                                 : null;
                             }}
                         />
+                        <div className="form-check form-switch" style={{textAlign: 'left'}}>
+                            <input 
+                              className="form-check-input border border-black" 
+                              type="checkbox" 
+                              role="switch" 
+                              checked={isAdmin}
+                              id="flexSwitchCheckDefault" 
+                              onChange={(e) => setIsAdmin(e.target.checked)}
+                            />
+                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+                                (Dev) Is Admin?
+                            </label>
+                        </div>
                         <div className="container-login100-form-btn">
                             <button className="login100-form-btn" type="submit">
                                 Register
