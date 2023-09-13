@@ -12,7 +12,8 @@ module.exports.login = async function(req, res) {
       const token = jwt.sign({
         email: candidate.email,
         username: candidate.username,
-        userId: candidate.id
+        userId: candidate.id,
+        isAdmin: candidate.isAdmin,
       }, keys.jwt, { expiresIn: 360000 })
       res.status(200).json({
         token: token
@@ -62,9 +63,7 @@ module.exports.getUsername = async function(req, res) {
     res.status(200).json({
       username
     });
-    // Делайте что-то с полученными данными о пользователе
   } catch (error) {
-      // Обработайте ошибку, например, если токен недействителен
       res.status(500).json({ message: 'Failed' });
   }
 };

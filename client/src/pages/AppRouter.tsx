@@ -35,6 +35,7 @@ const AppRouter = () => {
           <Route path="/register" element={<Register />} />
         </Route>
         <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+          <Route path="/profile/:id" element={<Profile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/createPost" element={<CreatePost />} />
           <Route path="/editPost/:id" element={<EditPost />} />

@@ -13,11 +13,12 @@ const User = ({ user }: { user: IUser }) => {
 
     axios.post(`${baseURL}/users/update-admin-status/${user.id}`, {
         isAdmin: checked
-    }, {
+    }, 
+    {
         headers: {
           Authorization: `Bearer ${token}`,
         }
-    }).then(response => { console.log(response) })
+    })
   }
 
   return (
@@ -37,6 +38,7 @@ const User = ({ user }: { user: IUser }) => {
             </div>
         </td>
         <td>{dataToString(user.createdAt)}</td>
+        <td><a href={`/profile/${user.id}`}>→</a></td>
     </tr>
   )
 }

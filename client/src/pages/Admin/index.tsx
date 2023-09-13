@@ -35,6 +35,7 @@ const Admin = () => {
                   <th>Email</th>
                   <th>Admin</th>
                   <th>Created At</th>
+                  <th>Profile</th>
                 </tr>
               </thead>
               <tbody>

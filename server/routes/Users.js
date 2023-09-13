@@ -27,6 +27,19 @@ router.get('/', async (req, res) => {
     }
 });
 
+// router.get('/userid', async (req, res) => {
+//     try {
+//       const token = req.headers.authorization.split(' ')[1];
+//       const decodedToken = jwt.verify(token, keys.jwt);
+//       const { userId } = decodedToken;
+//       res.status(200).json({
+//         userId
+//       });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Failed' });
+//     }
+// })
+
 router.get('/isadmin', async (req, res) => {
     try {
       const token = req.headers.authorization.split(' ')[1];
@@ -40,14 +53,24 @@ router.get('/isadmin', async (req, res) => {
     }
 })
 
-router.get('/userposts', async (req, res) => {
+router.get('/userposts/:userId', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, keys.jwt);
-    const { userId } = decodedToken;
-    let whereCondition = { userId };
-    
-    addQuerys.addQuery(whereCondition, req)
+    const { userId: tokenUserId, isAdmin } = decodedToken;
+    let whereCondition = {}
 
+    if (req.params.userId === 'undefined') {
+        whereCondition = { userId: tokenUserId };
+    } else if (tokenUserId === req.params.userId || isAdmin) {
+        whereCondition = { userId: req.params.userId };
+    } 
+    else {
+        res.status(500).json({ error: 'You don`t have permission' });
+        return
+    }
+
+    addQuerys.addQuery(whereCondition, req)
+    
     const userPosts = await Posts.findAll({
         where: whereCondition,
         include: [
