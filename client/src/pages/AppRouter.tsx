@@ -38,6 +38,7 @@ const AppRouter = () => {
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/createPost" element={<CreatePost />} />
+          <Route path="/createPost/:id" element={<CreatePost />} />
           <Route path="/editPost/:id" element={<EditPost />} />
         </Route>
         <Route element={<PrivateRoute isAuthenticated={isAdmin} redirectPath={'/'} />}>

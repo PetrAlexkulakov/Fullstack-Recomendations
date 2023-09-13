@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler, MultipleFieldErrors } from "react-hook-form"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ErrorMessage } from "@hookform/error-message";
 import { v4 as uuidv4 } from 'uuid';
 import Navbar from '../../components/Navbar'
@@ -9,6 +9,7 @@ import axios from 'axios';
 import TagsBody from '../../components/TagsBody';
 import ErrorComponent from '../../components/ErrorComponent';
 import DropFile from '../../components/DropFile';
+import { addId } from '../../shared/addId';
 
 interface IFormInput {
   title: string
@@ -28,6 +29,7 @@ const CreatePost = () => {
   const { register, formState: { errors }, setError, clearErrors, handleSubmit } = useForm<IFormInput>({
     criteriaMode: "all"
   })
+  const { id } = useParams();
   const navigate = useNavigate();
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
@@ -54,12 +56,12 @@ const CreatePost = () => {
   
     try {
       const token = localStorage.getItem('token');
-      axios.post(baseURL + "/posts", formData, {
+      axios.post(baseURL + addId("/posts", id), formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }).then(() => {
-        navigate("/profile");
+        navigate(addId("/profile", id));
       });
     } catch(error) {
       console.error("Error sending data:", error);

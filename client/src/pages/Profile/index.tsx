@@ -7,6 +7,7 @@ import queryString from "query-string";
 import axios from "axios";
 import classes from './styles.module.scss'
 import { checkIsAdmin } from "../../shared/authentification/isAdmin";
+import { addId } from "../../shared/addId";
 
 const Profile = () => {
   const [username, setUsername] = useState('User')
@@ -55,7 +56,7 @@ const Profile = () => {
             <div className="row">
                 <h1>Hello, {username}!</h1>
             </div>
-            <a href="/createPost" className={classes.btnAddPost}>
+            <a href={addId("/createPost", id)} className={classes.btnAddPost}>
                 <div className={classes.centeredContent}>
                     <div className="btn">Create Post</div>
                 </div>

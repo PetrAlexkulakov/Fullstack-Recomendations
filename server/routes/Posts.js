@@ -47,19 +47,23 @@ router.get('/:id', async (req, res) => {
     res.json(post);
 })
 
-router.post("/", upload.single('image'), async (req, res) => {
+router.post("/:autorId", upload.single('image'), async (req, res) => {
     const post = req.body;
     const imageFile = req.file;
-    
-    
-    post.imageURL = await createImage(imageFile, keyPath)
+    const autorId = req.params.autorId;
 
     if (checkAuth(req.headers.authorization)) {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, keys.jwt);
-        const { userId } = decodedToken;
+        const { userId, isAdmin } = decodedToken;
 
-        post.userId = userId;
+        post.imageURL = await createImage(imageFile, keyPath)
+
+        if (autorId === 'undefined') {
+            post.userId = userId;
+        } else if (isAdmin) {
+            post.userId = autorId;
+        }
 
         const createdPost = await Posts.create(post);
 
