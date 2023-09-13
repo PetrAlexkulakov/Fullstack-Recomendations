@@ -92,9 +92,9 @@ router.put('/:id', upload.single('image'), async (req, res) => {
   if (checkAuth(req.headers.authorization)) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, keys.jwt);
-    const { userId } = decodedToken;
+    const { userId, isAdmin } = decodedToken;
 
-    if (existingPost.userId !== userId) {
+    if (existingPost.userId !== userId && !isAdmin) {
       return res.status(403).json({ error: 'Access denied' });
     }
 
