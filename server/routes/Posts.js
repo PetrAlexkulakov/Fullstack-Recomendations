@@ -36,14 +36,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     
-    const post = await Posts.findByPk(id, {
-        // include: [
-        //     {
-        //         model: Users,
-        //         attributes: ['id', 'username', 'email'], // Выберите нужные атрибуты пользователя
-        //     }
-        // ]
-    });
+    const post = await Posts.findByPk(id);
     res.json(post);
 })
 
@@ -127,9 +120,9 @@ router.delete('/:id', async (req, res) => {
   if (checkAuth(req.headers.authorization)) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, keys.jwt);
-    const { userId } = decodedToken;
+    const { userId, isAdmin } = decodedToken;
 
-    if (existingPost.userId !== userId) {
+    if (existingPost.userId !== userId && !isAdmin) {
       return res.status(403).json({ error: 'Access denied' });
     }
 

@@ -65,8 +65,7 @@ router.get('/userposts/:userId', async (req, res) => {
         whereCondition = { userId: req.params.userId };
     } 
     else {
-        res.status(500).json({ error: 'You don`t have permission' });
-        return
+        return res.status(500).json({ error: 'You don`t have permission' });
     }
 
     addQuerys.addQuery(whereCondition, req)
