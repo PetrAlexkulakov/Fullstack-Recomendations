@@ -3,20 +3,39 @@ const router = express.Router()
 const jwt = require('jsonwebtoken');
 const { Posts } = require('../models');
 const { Tags } = require('../models')
+const { Users } = require('../models')
 const keys = require('../keys');
 const addQuerys = require('../controllers/addQuerys');
 
-router.get('/isadmin', async (req, res) => {
-    const token = req.headers.authorization.split(' ')[1];
+router.get('/', async (req, res) => {
     try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, keys.jwt);
+        const { isAdmin } = decodedToken;
+        if (isAdmin) {
+            const listOfUsers = await Users.findAll({
+                attributes: {
+                  exclude: ['password'] // Исключите поле 'password'
+                }
+            })
+            res.json(listOfUsers)
+        } else {
+            res.status(500).json({ message: 'Failed' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Failed' });
+    }
+});
+
+router.get('/isadmin', async (req, res) => {
+    try {
+      const token = req.headers.authorization.split(' ')[1];
       const decodedToken = jwt.verify(token, keys.jwt);
       const { isAdmin } = decodedToken;
       res.status(200).json({
         isAdmin
       });
-      // Делайте что-то с полученными данными о пользователе
     } catch (error) {
-        // Обработайте ошибку, например, если токен недействителен
         res.status(500).json({ message: 'Failed' });
     }
 })
@@ -43,5 +62,26 @@ router.get('/userposts', async (req, res) => {
     res.json(userPosts);
 });
 
+router.post('/update-admin-status/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { isAdmin } = req.body; 
+
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, keys.jwt);
+    const { isAdmin: currentIsAdmin } = decodedToken;
+
+    if (!currentIsAdmin) {
+      return res.status(403).json({ message: 'You do not have permission to perform this action.' });
+    }
+
+    await Users.update({ isAdmin }, { where: { id: userId } });
+
+    res.status(200).json({ message: 'Admin status updated successfully.' });
+  } catch (error) {
+    console.error('Error updating admin status:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 module.exports = router

@@ -10,7 +10,6 @@ export const checkIsAdmin = async () => {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
-        // })).data.isAdmin
         }).then((res) => {
             return res.data.isAdmin
         })
