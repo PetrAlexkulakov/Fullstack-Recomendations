@@ -7,8 +7,7 @@ const upload = multer({ storage: storage });
 const jwt = require('jsonwebtoken');
 const keys = require('../keys');
 const {Storage} = require('@google-cloud/storage')
-const { Posts } = require('../models')
-const { Tags } = require('../models')
+const { Posts, Tags, Comments } = require('../models')
 const addQuerys = require('../controllers/addQuerys');
 const { checkAuth } = require('../controllers/checkAuth');
 
@@ -19,18 +18,28 @@ router.get('/', async (req, res) => {
 
     addQuerys.addQuery(whereCondition, req)
 
-    const listOfPosts = await Posts.findAll({
-        where: whereCondition,
-        include: [
-            {
-                model: Tags,
-                as: 'Tags', 
-                attributes: [], 
-            }
-        ]  
-    })
+    try {
+        const listOfPosts = await Posts.findAll({
+            where: whereCondition,
+            include: [
+                {
+                    model: Tags,
+                    as: 'Tags', 
+                    attributes: [], 
+                },
+                {
+                    model: Comments, // Используйте модель комментариев
+                    as: 'comments', // Алиас для комментариев
+                    attributes: [], // Исключите атрибуты комментариев
+                }
+            ]  
+        })
 
-    res.json(listOfPosts)
+        res.json(listOfPosts)
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed' });
+    }
 })
 
 router.get('/:id', async (req, res) => {

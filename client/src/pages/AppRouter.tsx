@@ -51,11 +51,5 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (edit post img) (tags, comment search) admin, auth by socialMedia
+//todo (edit post img), (fix emty tag when edit post) auth by socialMedia
 //todo translate
-
-// Аутентифицированные пользователи имеют доступ ко всему, кроме админки. 
-// В базовом варианте админка представляет собой список пользователей (как ссылок на их страницы). 
-
-// Администратор видит каждую страницу пользователя и каждый "обзор" как ее создатель 
-// (например, может отредактировать или создать от имени пользователя с его страницы новый "обзор").

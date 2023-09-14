@@ -4,7 +4,9 @@ module.exports.addQuery = async function(whereCondition, req) {
     const { group, tags, search } = req.query;
 
     if (group) {
-        whereCondition.group = group;
+        whereCondition.group = {
+            [Op.like]: `%${group}%`
+        };
     }
 
     if (tags) {
@@ -15,10 +17,23 @@ module.exports.addQuery = async function(whereCondition, req) {
 
     if (search) {
         const searchLower = search.toLowerCase();
-        whereCondition[Op.or] = [
+        const searchArray = searchLower.split(' ');
+        const orConditions = [];
+
+        orConditions.push(
             { title: { [Op.like]: `%${searchLower}%` } },
             { smallText: { [Op.like]: `%${searchLower}%` } },
-            { fullText: { [Op.like]: `%${searchLower}%` } }
-        ];
+            { fullText: { [Op.like]: `%${searchLower}%` } },
+            { '$comments.text$': { [Op.like]: `%${searchLower}%` } }
+        );
+
+        searchArray.forEach(element => {
+            orConditions.push(
+                { '$Tags.name$': { [Op.like]: `%${element}%` } },
+                { group: { [Op.like]: `%${element}%` } }
+            );
+        });
+
+        whereCondition[Op.or] = orConditions;
     }
 }
