@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 import classes from './styles.module.scss'
-// import Post from "../Post";
 import Navbar from "../../components/Navbar";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm, MultipleFieldErrors, SubmitHandler } from "react-hook-form";
@@ -56,7 +55,7 @@ const EditPost = () => {
       annotation: annotation,
       text: text,
       group: group,
-      tags: activeTags.join(';'),
+      tags: activeTags.join(';') ? activeTags.join(';') : undefined,
       image: selectedFile as File
     };
   

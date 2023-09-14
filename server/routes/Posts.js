@@ -49,7 +49,7 @@ router.get('/:id', async (req, res) => {
     res.json(post);
 })
 
-router.post("/:autorId", upload.single('image'), async (req, res) => {
+router.post("/:autorId?", upload.single('image'), async (req, res) => {
     const post = req.body;
     const imageFile = req.file;
     const autorId = req.params.autorId;
@@ -61,7 +61,7 @@ router.post("/:autorId", upload.single('image'), async (req, res) => {
 
         post.imageURL = await createImage(imageFile, keyPath)
 
-        if (autorId === 'undefined') {
+        if (autorId === 'undefined' || autorId === undefined) {
             post.userId = userId;
         } else if (isAdmin) {
             post.userId = autorId;
@@ -69,9 +69,10 @@ router.post("/:autorId", upload.single('image'), async (req, res) => {
 
         const createdPost = await Posts.create(post);
 
-        const tagsReq = req.body.tags.split(';')
-
-        await addTags(tagsReq, createdPost)
+        if (req.body.tags) {
+            const tagsReq = req.body.tags.split(';')
+            await addTags(tagsReq, createdPost)
+        }
 
         res.json(post);
     } else {
@@ -106,9 +107,10 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     await existingPost.update(postData);
 
     await existingPost.setTags([]);
-    const tagsReq = req.body.tags.split(';')
-
-    await addTags(tagsReq, existingPost)
+    if (req.body.tags) {
+        const tagsReq = req.body.tags.split(';')
+        await addTags(tagsReq, createdPost)
+    }
 
     res.json(existingPost);
   } else {

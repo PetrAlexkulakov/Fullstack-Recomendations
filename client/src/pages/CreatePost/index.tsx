@@ -46,17 +46,18 @@ const CreatePost = () => {
   }
 
   const onSubmit: SubmitHandler<IFormInput> = async () => {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("smallText", annotation);
-    formData.append("fullText", text);
-    formData.append("group", group);
-    formData.append("tags", activeTags.join(';'));
-    formData.append("image", selectedFile as File);
+    const postData = {
+      title: title,
+      smallText: annotation,
+      fullText: text,
+      group: group,
+      tags: activeTags.join(';') ? activeTags.join(';') : undefined,
+      image: selectedFile as File
+    };
   
     try {
       const token = localStorage.getItem('token');
-      axios.post(baseURL + addId("/posts", id), formData, {
+      axios.post(baseURL + addId("/posts", id), postData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

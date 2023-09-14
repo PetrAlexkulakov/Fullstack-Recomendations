@@ -13,7 +13,7 @@ const TagsBody = ({ tag, setTag, activeTags, addTag = () => {}, deleteTag = () =
   const handleCreateTag = async (newTag: string) => {
     const alreadyExists = activeTags?.some((tag) => tag.toLowerCase() === newTag.toLowerCase());
   
-    if (!alreadyExists) {
+    if (!alreadyExists && newTag !== '') {
       setTag(newTag);
     }
   };
@@ -41,7 +41,7 @@ const TagsBody = ({ tag, setTag, activeTags, addTag = () => {}, deleteTag = () =
   return (
     <div className="card-body">
         <div className="d-flex flex-wrap gap-1 mb-1">
-            {activeTags && activeTags.map((tag, index) => 
+            {activeTags && activeTags?.length > 0 && activeTags.map((tag, index) => 
                 <div key={index} 
                     className="d-flex justify-content-between 
                     badge bg-primary text-decoration-none link-light w-25">

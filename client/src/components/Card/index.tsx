@@ -7,7 +7,8 @@ import Ratings from "../Raitings";
 const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) => {
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
-  const deletePost = () => {
+  const deletePost = (e: MouseEvent) => {
+    e.preventDefault();
     const token = localStorage.getItem('token');
     axios.delete(baseURL + "/posts/" + post.id, {
       headers: {
@@ -29,7 +30,10 @@ const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) =>
         <h2 className="card-title h4" style={{textAlign: "left"}}>{post.title}</h2>
         <p className="card-text" style={{textAlign: "left"}}>{post.smallText}</p>
         <div className="d-flex justify-content-around align-items-center w-100">
-          {isAuthor && <button className="btn btn-primary" onClick={deletePost}>Delete</button>}
+          {isAuthor && <button className="btn btn-primary" onClick={(e) => deletePost(e as unknown as MouseEvent)}>
+              Delete
+            </button>
+          }
           <a className="btn btn-primary" href={`/post/${post.id}`}>Read more →</a>
           {isAuthor && <a className="btn btn-primary" href={`/editPost/${post.id}`}>Edit</a>}
           <Likes post={post} />

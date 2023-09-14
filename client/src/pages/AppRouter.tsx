@@ -51,5 +51,6 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (edit post img), (fix emty tag when edit post) auth by socialMedia
+//todo (edit post img) auth by socialMedia
 //todo translate
+//todo test this shit
