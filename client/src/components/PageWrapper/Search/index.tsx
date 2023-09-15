@@ -1,8 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from 'query-string';
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Search = ({ isProfile }: { isProfile?: boolean }) => {
+  const { t } = useTranslation();
   const location = useLocation();
   const queryParams = queryString.parse(location.search)
   const activeSearch = queryParams.search;
@@ -39,7 +41,7 @@ const Search = ({ isProfile }: { isProfile?: boolean }) => {
       <input
         className="form-control"
         type="text"
-        placeholder="Enter search term..."
+        placeholder={t("EnterSearch")}
         aria-label="Enter search term..."
         aria-describedby="button-search"
         value={searchTerm}

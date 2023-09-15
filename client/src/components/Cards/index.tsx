@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Post } from "../../interfaces/Post"
 import Card from "../Card"
 
@@ -5,6 +6,8 @@ const Cards = ({ posts, isSecondary = false, isAuthor = false }: {
     posts: Post[], 
     isSecondary?: boolean, 
     isAuthor?: boolean }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       {posts.length > 0 || isSecondary ? (
@@ -16,7 +19,7 @@ const Cards = ({ posts, isSecondary = false, isAuthor = false }: {
           ))}
         </div>
       ) : (
-        <h3>No Posts Available</h3>
+        <h3>{t('NoPosts')}</h3>
       )}
     </>
   )

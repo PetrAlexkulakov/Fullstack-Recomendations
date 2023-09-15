@@ -1,5 +1,6 @@
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import axios from "axios";
+import { useTranslation } from 'react-i18next';
 
 const TagsBody = ({ tag, setTag, activeTags, addTag = () => {}, deleteTag = () => {} }: { 
     tag: string | null, 
@@ -8,6 +9,7 @@ const TagsBody = ({ tag, setTag, activeTags, addTag = () => {}, deleteTag = () =
     addTag?: () => void,
     deleteTag?: (index: string) => void,
 }) => {
+  const { t } = useTranslation();
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
   const handleCreateTag = async (newTag: string) => {
@@ -64,6 +66,7 @@ const TagsBody = ({ tag, setTag, activeTags, addTag = () => {}, deleteTag = () =
                 value={tag !== null ? { name: tag, label: tag } : null}
                 onChange={handleSelectChange}
                 onCreateOption={(newTag) => handleCreateTag(newTag)}
+                placeholder={t('Select')}
                 onKeyDown={(e) => {
                 if (e.key === "Enter") {
                     e.preventDefault();
@@ -72,7 +75,7 @@ const TagsBody = ({ tag, setTag, activeTags, addTag = () => {}, deleteTag = () =
                 }
                 }}
             />
-            <button type='button' className='border ms-1 p-2' onClick={addTag}>Add</button>
+            <button type='button' className='btn btn-primary border ms-1 p-2' onClick={addTag}>{t('Add')}</button>
         </div>
     </div>
   )

@@ -53,4 +53,4 @@ export default AppRouter
 
 //todo (edit post img) auth by socialMedia
 //todo translate
-//todo test this shit
+//todo test all this shit

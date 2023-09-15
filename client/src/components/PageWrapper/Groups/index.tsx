@@ -1,7 +1,9 @@
 import { useLocation } from "react-router-dom";
 import queryString from 'query-string';
+import { useTranslation } from "react-i18next";
 
 const Groups = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const queryParams = queryString.parse(location.search)
   const activeGroup = queryParams.group;
@@ -22,10 +24,26 @@ const Groups = () => {
   
   return (
     <ul className="list-unstyled mb-0">
-      <li><a className={activeGroup === 'film' ? 'active' : ''} href={appendQueryParams({ group: 'film' })}>Film</a></li>
-      <li><a className={activeGroup === 'game' ? 'active' : ''} href={appendQueryParams({ group: 'game' })}>Game</a></li>
-      <li><a className={activeGroup === 'book' ? 'active' : ''} href={appendQueryParams({ group: 'book' })}>Book</a></li>
-      <li><a className={!activeGroup ? 'active' : ''} href={`?${removeGroupParam()}`}>Any</a></li>
+      <li>
+        <a className={activeGroup === 'film' ? 'active' : ''} href={appendQueryParams({ group: 'film' })}>
+          {t('Film')}
+        </a>
+      </li>
+      <li>
+        <a className={activeGroup === 'game' ? 'active' : ''} href={appendQueryParams({ group: 'game' })}>
+          {t('Game')}
+        </a>
+      </li>
+      <li>
+        <a className={activeGroup === 'book' ? 'active' : ''} href={appendQueryParams({ group: 'book' })}>
+          {t('Book')}
+        </a>
+      </li>
+      <li>
+        <a className={!activeGroup ? 'active' : ''} href={`?${removeGroupParam()}`}>
+          {t('Any')}
+        </a>
+      </li>
     </ul>
   )
 }

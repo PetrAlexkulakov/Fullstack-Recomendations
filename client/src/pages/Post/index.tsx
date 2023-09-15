@@ -8,8 +8,10 @@ import PageWrapper from "../../components/PageWrapper";
 import Likes from "../../components/Likes";
 import Ratings from "../../components/Raitings";
 import Comments from "../../components/Comments";
+import { useTranslation } from "react-i18next";
 
 const Post = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL
@@ -30,10 +32,10 @@ const Post = () => {
             <>
                 <article>
                     <header className="mb-4 d-flex flex-column align-items-center">
-                        <h1 className="fw-bolder mb-1">Welcome to Blog Post!</h1>
+                        <h3 className="fw-bolder mb-1">{post.title}</h3>
                         <div className="d-flex justify-content-around gap-3 w-100">
                             <Ratings post={post} />
-                            <div className="badge bg-secondary text-decoration-none link-light">{post.group}</div>
+                            <div className="badge bg-secondary text-decoration-none link-light">{t(post.group)}</div>
                             <div className="text-muted fst-italic mb-2">{dataToString(post.createdAt)}</div>
                         </div>
                     </header>

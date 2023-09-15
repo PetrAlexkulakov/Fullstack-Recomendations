@@ -3,8 +3,10 @@ import { dataToString } from "../../shared/dataToString";
 import axios from "axios";
 import Likes from "../Likes";
 import Ratings from "../Raitings";
+import { useTranslation } from "react-i18next";
 
 const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) => {
+  const { t } = useTranslation();
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
   const deletePost = (e: MouseEvent) => {
@@ -31,11 +33,11 @@ const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) =>
         <p className="card-text" style={{textAlign: "left"}}>{post.smallText}</p>
         <div className="d-flex justify-content-around align-items-center w-100">
           {isAuthor && <button className="btn btn-primary" onClick={(e) => deletePost(e as unknown as MouseEvent)}>
-              Delete
+              {t('Delete')}
             </button>
           }
-          <a className="btn btn-primary" href={`/post/${post.id}`}>Read more →</a>
-          {isAuthor && <a className="btn btn-primary" href={`/editPost/${post.id}`}>Edit</a>}
+          <a className="btn btn-primary" href={`/post/${post.id}`}>{t('ReadMore')}</a>
+          {isAuthor && <a className="btn btn-primary" href={`/editPost/${post.id}`}>{t('Edit')}</a>}
           <Likes post={post} />
         </div>
       </div>

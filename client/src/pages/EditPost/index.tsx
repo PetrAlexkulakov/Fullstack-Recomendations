@@ -9,6 +9,7 @@ import { useForm, MultipleFieldErrors, SubmitHandler } from "react-hook-form";
 import DropFile from "../../components/DropFile";
 import ErrorComponent from "../../components/ErrorComponent";
 import TagsBody from "../../components/TagsBody";
+import { useTranslation } from "react-i18next";
 
 interface IFormInput {
     title: string
@@ -18,6 +19,7 @@ interface IFormInput {
 }
 
 const EditPost = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [annotation, setAnnotation] = useState("");
@@ -78,7 +80,6 @@ const EditPost = () => {
     axios.get(baseURL + '/posts/' + id).then((res) => {
         const data = res.data;
 
-        // setPost(data);
         setTitle(data!.title)
         setAnnotation(data!.smallText)
         setText(data!.fullText)
@@ -93,20 +94,20 @@ const EditPost = () => {
       <Navbar />
       <div className={classes.createContainer + " d-flex justify-content-center align-items-center"}>
         <form className={classes.createForm + " w-75 p-2"} onSubmit={handleSubmit(onSubmit)}>
-          <h2>Edit Your Review!</h2>
+          <h2>{t('EditPost')}!</h2>
           <div className="mb-3 mt-2">
-              <label htmlFor="InputText1" className="form-label">Title:</label>
+              <label htmlFor="InputText1" className="form-label">{t('Title')}:</label>
               <input 
                 type= "text"
                 className="form-control"
                 id="InputText1"
-                placeholder='The title of the article'
+                placeholder={t('TitlePl')}
                 value={title}
                 {...register("title", { 
-                  required: "This input is required.", 
+                  required: t('InputReq'), 
                   maxLength: {
                     value: 40,
-                    message: "This input can`t exceed 40 characters"
+                    message: `${t('InputCant')} 40 ${t('characters')}`
                   } 
                 })} 
                 onChange={(e) => setTitle(e.target.value)}
@@ -126,17 +127,17 @@ const EditPost = () => {
               />
           </div>
           <div className="mb-3">
-              <label htmlFor="InputText2" className="form-label">Annotation:</label>
+              <label htmlFor="InputText2" className="form-label">{t('Annotation')}:</label>
               <textarea 
                 className="form-control"
                 id="InputText2"
                 value={annotation}
-                placeholder='At this review I wanna tell about...'
+                placeholder={t('AnnotationPl')}
                 {...register("annotation", { 
-                  required: "Annotation is required.", 
+                  required: t('InputReq'), 
                   maxLength: {
                     value: 150,
-                    message: "Annotation can`t exceed 150 characters"
+                    message: `${t('InputCant')} 150 ${t('characters')}`
                   } 
                 })} 
                 rows={3}
@@ -157,17 +158,17 @@ const EditPost = () => {
               />
           </div>
           <div className="mb-3">
-            <label htmlFor="InputText3" className="form-label">Text:</label>
+            <label htmlFor="InputText3" className="form-label">{t('Text')}:</label>
               <textarea 
                 className="form-control"
                 id="InputText3"
-                placeholder='You can use Markdown'
+                placeholder={t('TextPl')}
                 value={text}
                 {...register("text", { 
-                  required: "This input is required.", 
+                  required: t('InputReq'), 
                   maxLength: {
                     value: 10000,
-                    message: "This input can`t exceed 10000 characters"
+                    message: `${t('InputCant')} 10000 ${t('characters')}`
                   } 
                 })} 
                 rows={10}
@@ -189,19 +190,19 @@ const EditPost = () => {
           </div>
           <div className="d-flex justify-content-between align-items-center mb-3 mt-2">
             <div className='w-25 me-1'>
-              <label htmlFor="InputSelect1" className="form-label">Group:</label>
+              <label htmlFor="InputSelect1" className="form-label">{t('Groups')}:</label>
               <select 
                 className="form-select" 
                 id="InputSelect1" 
                 value={group}
                 onChange={(e) => setGroup(e.target.value)}>
-                <option value="Book">Book</option>
-                <option value="Game">Game</option>
-                <option value="Film">Film</option>
+                <option value="Book">{t('Book')}</option>
+                <option value="Game">{t('Game')}</option>
+                <option value="Film">{t('Film')}</option>
               </select>
             </div>
             <div className='w-100'>
-              <label htmlFor="InputText4" className="form-label">Input Tags:</label>
+              <label htmlFor="InputText4" className="form-label">{t('InputTags')}:</label>
               <TagsBody 
                 tag={tag} 
                 setTag={setTag} 
@@ -212,7 +213,7 @@ const EditPost = () => {
             </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="InputFilm4" className="form-label">Preview Image:</label>
+            <label htmlFor="InputFilm4" className="form-label">{t('PreviewImage')}:</label>
             <DropFile 
               selectedFile={selectedFile}
               setSelectedFile={setSelectedFile}
@@ -226,8 +227,10 @@ const EditPost = () => {
             />
           </div>
           <div className="d-flex justify-content-around">
-            <button type="button" className="btn border-black" onClick={() => {navigate('/profile')}}>Cancel Changes</button>
-            <button type="submit" className="btn btn-primary">Send</button>
+            <button type="button" className="btn border-black" onClick={() => {navigate('/profile')}}>
+              {t('CancelChanges')}
+            </button>
+            <button type="submit" className="btn btn-primary">{t('Send')}</button>
           </div>
         </form>
       </div>

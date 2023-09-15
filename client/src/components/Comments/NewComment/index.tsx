@@ -1,9 +1,11 @@
 import { FormEvent, useState } from "react";
 import { Post } from "../../../interfaces/Post";
 import { Socket } from "socket.io-client";
+import { useTranslation } from "react-i18next";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const NewComment = ({ post, socket }: { post: Post, socket: Socket<any, any> }) => {
+  const { t } = useTranslation();
   const [text, setText] = useState("");
   const token = localStorage.getItem('token');
 
@@ -25,7 +27,7 @@ const NewComment = ({ post, socket }: { post: Post, socket: Socket<any, any> }) 
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button type="submit" className="border border-black ms-1 me-1">Send</button>
+        <button type="submit" className="border border-black ms-1 me-1">{t('Send')}</button>
     </form>
   )
 }

@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import ErrorComponent from '../ErrorComponent';
 import { FieldErrors, UseFormClearErrors, UseFormSetError, ValidateResult } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 const DropFile = ({selectedFile, setSelectedFile, inputProps, setError, errors, clearErrors }: {
     selectedFile: File | null,
@@ -12,6 +13,7 @@ const DropFile = ({selectedFile, setSelectedFile, inputProps, setError, errors, 
     errors: FieldErrors<any>,
     clearErrors: UseFormClearErrors<any>
   }) => {
+  const { t } = useTranslation();
   const onDrop = useCallback((acceptedFiles: any) => {
     const acceptedFormats = ['jpg', 'png', 'jpeg'];
     const fileExtension = acceptedFiles[0]?.name.split('.').pop()?.toLowerCase() as string;
@@ -33,10 +35,10 @@ const DropFile = ({selectedFile, setSelectedFile, inputProps, setError, errors, 
         />
         {selectedFile ? (
           <p className='btn border-black'>
-            Файл выбран: {selectedFile.name}
+            {t('FileSelected')}: {selectedFile.name}
           </p>
         ) : (
-        <p className='btn border-black'>Перетащите сюда файл или нажмите, чтобы выбрать файл.</p>
+        <p className='btn border-black'>{t('SelectFile')}</p>
         )}
       </div>
       {errors.file && (
