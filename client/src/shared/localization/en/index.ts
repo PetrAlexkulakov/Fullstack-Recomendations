@@ -14,7 +14,7 @@ export default {
         Home: 'Home',
         NoPosts: 'No Posts Available',
         Delete: 'Delete',
-        ReadMore: 'Read more →',
+        ReadMore: 'Read more',
         Edit: 'Edit',
         WelcomeBP: 'Welcome To Blog Post!',
         Send: 'Send',

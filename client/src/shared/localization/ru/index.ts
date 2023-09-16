@@ -14,7 +14,7 @@ export default {
         Home: 'Главная',
         NoPosts: 'Нет доступных постов',
         Delete: 'Удалить',
-        ReadMore: 'Читать →',
+        ReadMore: 'Читать',
         Edit: 'Редактировать',
         WelcomeBP: 'Добро Пожаловать!',
         Send: 'Отправить',
