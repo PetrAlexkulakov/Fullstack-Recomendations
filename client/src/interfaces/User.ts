@@ -4,4 +4,5 @@ export interface IUser {
     email: string;
     isAdmin: boolean;
     createdAt: string;
+    totalLikes: string;
 }

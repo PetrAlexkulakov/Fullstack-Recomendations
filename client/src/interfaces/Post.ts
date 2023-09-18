@@ -9,4 +9,5 @@ export interface Post {
     tags: string
     likesCount: string
     raiting: string
+    userId: string
 }

@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
         if (isAdmin) {
             const listOfUsers = await Users.findAll({
                 attributes: {
-                  exclude: ['password'] // Исключите поле 'password'
+                  exclude: ['password']
                 }
             })
             res.json(listOfUsers)
@@ -27,20 +27,27 @@ router.get('/', async (req, res) => {
     }
 });
 
-// router.get('/userid', async (req, res) => {
-//     try {
-//       const token = req.headers.authorization.split(' ')[1];
-//       const decodedToken = jwt.verify(token, keys.jwt);
-//       const { userId } = decodedToken;
-//       res.status(200).json({
-//         userId
-//       });
-//     } catch (error) {
-//         res.status(500).json({ message: 'Failed' });
-//     }
-// })
+router.get('/:id', async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+      const user = await Users.findByPk(userId, {
+        attributes: { exclude: ['password'] }
+      });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
 
 router.get('/isadmin', async (req, res) => {
+    console.log('')
     try {
       const token = req.headers.authorization.split(' ')[1];
       const decodedToken = jwt.verify(token, keys.jwt);
@@ -105,5 +112,18 @@ router.post('/update-admin-status/:userId', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+// router.get('/userid', async (req, res) => {
+//     try {
+//       const token = req.headers.authorization.split(' ')[1];
+//       const decodedToken = jwt.verify(token, keys.jwt);
+//       const { userId } = decodedToken;
+//       res.status(200).json({
+//         userId
+//       });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Failed' });
+//     }
+// })
 
 module.exports = router

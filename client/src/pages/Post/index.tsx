@@ -9,6 +9,7 @@ import Likes from "../../components/Likes";
 import Ratings from "../../components/Raitings";
 import Comments from "../../components/Comments";
 import { useTranslation } from "react-i18next";
+import Author from "../../components/Author";
 
 const Post = () => {
   const { t } = useTranslation();
@@ -32,6 +33,7 @@ const Post = () => {
             <>
                 <article>
                     <header className="mb-4 d-flex flex-column align-items-center">
+                        <Author post={post} />
                         <h3 className="fw-bolder mb-1">{post.title}</h3>
                         <div className="d-flex justify-content-around gap-3 w-100">
                             <Ratings post={post} />

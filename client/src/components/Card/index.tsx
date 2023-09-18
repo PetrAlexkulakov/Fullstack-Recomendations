@@ -4,6 +4,7 @@ import axios from "axios";
 import Likes from "../Likes";
 import Ratings from "../Raitings";
 import { useTranslation } from "react-i18next";
+import Author from "../Author";
 
 const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) => {
   const { t } = useTranslation();
@@ -20,9 +21,11 @@ const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) =>
       window.location.reload();
     })
   }
+
   return (
     <>
       <div className="card-body d-flex flex-column justify-content-end align-items-center">
+        <Author post={post} />
         <img className="w-100 pb-2" src={post.imageURL} alt="..." />
         <div className="d-flex gap-3"> 
           <Ratings post={post} />

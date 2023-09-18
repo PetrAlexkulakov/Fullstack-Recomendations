@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const keys = require('../keys');
-const { Posts, Likes } = require('../models');
+const { Posts, Likes, Users } = require('../models');
 const { checkAuth } = require('../controllers/checkAuth');
 
 router.get('/:postId/liked', async (req, res) => {
@@ -53,6 +53,12 @@ router.post('/:postId/like', async (req, res) => {
           post.likesCount -= 1;
           await post.save();
         }
+
+        const user = await Users.findByPk(post.userId);
+        if (user) {
+            user.totalLikes -= 1;
+            await user.save();
+        }
   
         return res.status(200).json({ message: 'Like removed successfully', action: 'remove' });
       }
@@ -66,6 +72,13 @@ router.post('/:postId/like', async (req, res) => {
       if (post) {
         post.likesCount += 1;
         await post.save();
+      }
+
+      // Увеличиваем totalLikes пользователя
+      const user = await Users.findByPk(post.userId);
+      if (user) {
+          user.totalLikes += 1;
+          await user.save();
       }
   
       res.status(200).json({ message: 'Like added successfully', action: 'add' });

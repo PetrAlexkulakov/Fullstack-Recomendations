@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        totalLikes: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0, // начальное значение 0
+        },
         isAdmin: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
