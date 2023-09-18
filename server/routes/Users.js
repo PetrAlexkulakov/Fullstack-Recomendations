@@ -27,6 +27,20 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/isadmin', async (req, res) => {
+    console.log('')
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      const decodedToken = jwt.verify(token, keys.jwt);
+      const { isAdmin } = decodedToken;
+      res.status(200).json({
+        isAdmin
+      });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed' });
+    }
+})
+
 router.get('/:id', async (req, res) => {
     const userId = req.params.id;
 
@@ -46,19 +60,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.get('/isadmin', async (req, res) => {
-    console.log('')
-    try {
-      const token = req.headers.authorization.split(' ')[1];
-      const decodedToken = jwt.verify(token, keys.jwt);
-      const { isAdmin } = decodedToken;
-      res.status(200).json({
-        isAdmin
-      });
-    } catch (error) {
-        res.status(500).json({ message: 'Failed' });
-    }
-})
 
 router.get('/userposts/:userId', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];

@@ -23,7 +23,7 @@ const AppRouter = () => {
     };
 
     checkAdminStatus();
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <BrowserRouter>
