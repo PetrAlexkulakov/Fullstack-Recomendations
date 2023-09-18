@@ -51,4 +51,4 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (edit post img) auth by socialMedia
+//todo (edit post img) auth by socialMedia, like summary for every user?, sort posts

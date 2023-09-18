@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ErrorComponent from '../../components/ErrorComponent';
+// import { SocialLoginButton } from './SocialLoginButton';
 
 interface IFormInput {
     email: string
@@ -106,6 +107,7 @@ const Auth = () => {
                                 Login
                             </button>
                         </div>
+                        {/* <SocialLoginButton /> */}
                         <div className="text-center p-t-46 p-b-20">
                             <a className="" href={`/register`}>or register</a>
                         </div>
