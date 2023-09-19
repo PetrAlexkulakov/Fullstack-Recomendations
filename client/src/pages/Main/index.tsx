@@ -18,12 +18,13 @@ const Main = () => {
         params: {
             group: quertParams.group,
             tags: quertParams.tags,
-            search: quertParams.search
+            search: quertParams.search,
+            sortType: quertParams.sort
         }
     }).then((res) => {
         setPosts(res.data)
     })
-  }, [baseURL, quertParams.group, quertParams.search, quertParams.tags])
+  }, [baseURL, quertParams.group, quertParams.search, quertParams.sort, quertParams.tags])
 
   return (
     <PageWrapper isFull={true}>

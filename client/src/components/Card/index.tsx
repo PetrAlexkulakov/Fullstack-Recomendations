@@ -24,7 +24,7 @@ const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) =>
 
   return (
     <>
-      <div className="card-body d-flex flex-column justify-content-end align-items-center">
+      <div className="card-body pt-0 d-flex flex-column justify-content-end align-items-center">
         <Author post={post} />
         <img className="w-100 pb-2" src={post.imageURL} alt="..." />
         <div className="d-flex gap-3"> 

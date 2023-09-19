@@ -19,6 +19,9 @@ router.get('/', async (req, res) => {
     addQuerys.addQuery(whereCondition, req)
 
     try {
+        const { sortType } = req.query;
+        const order = sortType === 'rating' ? [['raiting', 'DESC']] : [['createdAt', 'DESC']];
+
         const listOfPosts = await Posts.findAll({
             where: whereCondition,
             include: [
@@ -32,7 +35,8 @@ router.get('/', async (req, res) => {
                     as: 'comments', // Алиас для комментариев
                     attributes: [], // Исключите атрибуты комментариев
                 }
-            ]  
+            ],
+            order: order 
         })
 
         res.json(listOfPosts)

@@ -43,5 +43,8 @@ export default {
         Admin: 'Админ',
         CreatedAt: 'Создан',
         Profile: 'Профиль',
+        Author: "Автор",
+        SortRating: 'Сортировка по Рейтингу',
+        SortDate: 'Сортировка по Дате',
     }
 }

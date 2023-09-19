@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-const Search = ({ isProfile }: { isProfile?: boolean }) => {
+const Search = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const queryParams = queryString.parse(location.search)
@@ -29,11 +29,7 @@ const Search = ({ isProfile }: { isProfile?: boolean }) => {
       };
     }
 
-    if (isProfile) {
-      navigator(`/profile/?` + queryString.stringify(newQueryParams));
-    } else {
-      navigator(`/?` + queryString.stringify(newQueryParams));
-    }
+    navigator(`${location.pathname}?${queryString.stringify(newQueryParams)}`);
   };
 
   return (

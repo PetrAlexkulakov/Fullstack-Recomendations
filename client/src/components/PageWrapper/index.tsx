@@ -4,9 +4,10 @@ import Groups from "./Groups"
 import Search from "./Search"
 import Tags from "./Tags"
 import Navbar from "../Navbar"
+import Sort from "./Sort";
 
-const PageWrapper = ({ children, isFull, isProfile = false }: 
-    { children: ReactNode, isFull?: boolean, isProfile?: boolean } ) => {
+const PageWrapper = ({ children, isFull }: 
+    { children: ReactNode, isFull?: boolean } ) => {
     const { t } = useTranslation();
 
     return (
@@ -14,12 +15,15 @@ const PageWrapper = ({ children, isFull, isProfile = false }:
       <Navbar />
       <div className="container">
       <div className="row">
+        {isFull && 
+          <Sort />
+        }
         { children }
           <div className="col-lg-4">
               <div className="card mb-4">
                   <div className="card-header">{t('search')}</div>
                   <div className="card-body">
-                    <Search isProfile={isProfile} />
+                    <Search />
                   </div>
               </div>
               {isFull && 

@@ -1,9 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken');
-const { Posts } = require('../models');
-const { Tags } = require('../models')
-const { Users } = require('../models')
+const { Users, Comments, Tags, Posts } = require('../models')
 const keys = require('../keys');
 const addQuerys = require('../controllers/addQuerys');
 
@@ -77,6 +75,9 @@ router.get('/userposts/:userId', async (req, res) => {
     }
 
     addQuerys.addQuery(whereCondition, req)
+
+    const { sortType } = req.query;
+    const order = sortType === 'rating' ? [['raiting', 'DESC']] : [['createdAt', 'DESC']];
     
     const userPosts = await Posts.findAll({
         where: whereCondition,
@@ -85,8 +86,14 @@ router.get('/userposts/:userId', async (req, res) => {
                 model: Tags,
                 as: 'Tags',
                 attributes: [],
+            },
+            {
+                model: Comments, 
+                as: 'comments', 
+                attributes: [], 
             }
-        ]
+        ],
+        order: order
     });
 
     res.json(userPosts);

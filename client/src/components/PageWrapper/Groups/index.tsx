@@ -10,8 +10,8 @@ const Groups = () => {
 
   const appendQueryParams = (params: { group: string }) => {
     const newQueryParams = {
-      ...queryParams, // Существующие параметры
-      ...params       // Дополнительные параметры
+      ...queryParams,
+      ...params      
     };
     return '?' + queryString.stringify(newQueryParams);
   };

@@ -35,8 +35,8 @@ const AppRouter = () => {
           <Route path="/register" element={<Register />} />
         </Route>
         <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
-          <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id/" element={<Profile />} />
+          <Route path="/profile/" element={<Profile />} />
           <Route path="/createPost" element={<CreatePost />} />
           <Route path="/createPost/:id" element={<CreatePost />} />
           <Route path="/editPost/:id" element={<EditPost />} />
@@ -51,7 +51,8 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (edit post img) auth by socialMedia, like summary for every user?, sort posts, 10-b rating
+//todo (edit post img) auth by socialMedia, improve like summary for every user, sort posts, 10-b rating, 404-page
+//fix userposts search
 
 // Также пользователь может поставить лайк собственно самому обзору (не более 1 на обзор от 1 пользователя), 
 // эти лайки складываются по всем обзорам пользователя и отображаются рядом с именем пользователя.

@@ -29,7 +29,8 @@ const Profile = () => {
         params: {
             group: quertParams.group,
             tags: quertParams.tags,
-            search: quertParams.search
+            search: quertParams.search,
+            sortType: quertParams.sort
         }
     };
 
@@ -49,11 +50,11 @@ const Profile = () => {
     }
 
     checkAdminStatus();
-  }, [baseURL, id, quertParams.group, quertParams.search, quertParams.tags])
+  }, [baseURL, id, quertParams.group, quertParams.search, quertParams.sort, quertParams.tags])
   
   
   return (
-    <PageWrapper isFull={true} isProfile={true}>
+    <PageWrapper isFull={true}>
         <div className="col-lg-8 pt-2">
             <div className="row">
                 <h1>{t('Hello')}, {username}!</h1>
