@@ -35,7 +35,7 @@ router.post('/:postId/rating', async (req, res) => {
   const { postId } = req.params;
   const { rating } = req.body;
 
-  if (rating < 1 || rating > 5) {
+  if (rating < 0.5 || rating > 5) {
     return res.status(400).json({ error: 'Invalid rating value' });
   }
 

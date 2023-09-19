@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Raitings = sequelize.define("Raitings", {
         count: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         userId: {

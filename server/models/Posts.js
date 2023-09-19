@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 0,
         },
         raiting: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
             defaultValue: 0,
         }
     })
