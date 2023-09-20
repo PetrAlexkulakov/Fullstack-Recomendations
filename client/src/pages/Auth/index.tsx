@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ErrorComponent from '../../components/ErrorComponent';
-// import { SocialLoginButton } from './SocialLoginButton';
+import { useTranslation } from 'react-i18next';
 
 interface IFormInput {
     email: string
@@ -20,6 +20,7 @@ const Auth = () => {
     criteriaMode: "all"
   })
   const navigation = useNavigate();
+  const { t } = useTranslation();
   const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
   const handleLogin: SubmitHandler<IFormInput> = async () => {
@@ -62,7 +63,7 @@ const Auth = () => {
                 <div className="wrap-login100">
                     <form className="login100-form validate-form" onSubmit={handleSubmit(handleLogin)}>
                         <span className="login100-form-title p-b-43">
-                            Login to continue
+                            {t('LoginTo')}
                         </span>
                         <div className="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                             <input 
@@ -70,15 +71,15 @@ const Auth = () => {
                                 type="email"
                                 value={email} 
                                 {...register("email", { 
-                                    required: "This input is required.", 
+                                    required: t('InputReq'), 
                                     maxLength: {
                                       value: 100,
-                                      message: "This input can`t exceed 100 characters"
+                                      message: `${t('InputCant')} 100 ${t('characters')}`
                                     } 
                                 })}
                                 onChange={(e) => setEmail(e.target.value)}/>
                             <span className="focus-input100"></span>
-                            <span className="label-input100">Email</span>
+                            <span className="label-input100">{t('Email')}</span>
                         </div>
                         {errors.email && (
                             <ErrorComponent>{errors.email.message}</ErrorComponent>
@@ -88,16 +89,16 @@ const Auth = () => {
                                 className="input100" 
                                 type="password"
                                 {...register("password", { 
-                                    required: "This input is required.", 
+                                    required: t('InputReq'), 
                                     maxLength: {
                                       value: 100,
-                                      message: "This input can`t exceed 100 characters"
+                                      message: `${t('InputCant')} 100 ${t('characters')}`
                                     } 
                                 })} 
                                 value={password} 
                                 onChange={(e) => setPassword(e.target.value)}/>
                             <span className="focus-input100"></span>
-                            <span className="label-input100">Password</span>
+                            <span className="label-input100">{t('Password')}</span>
                         </div>
                         {errors.password && (
                             <ErrorComponent>{errors.password.message}</ErrorComponent>
@@ -107,18 +108,9 @@ const Auth = () => {
                                 Login
                             </button>
                         </div>
-                        {/* <SocialLoginButton /> */}
                         <div className="text-center p-t-46 p-b-20">
                             <a className="" href={`/register`}>or register</a>
                         </div>
-                        {/* <div className="login100-form-social flex-c-m">
-                            <a href="#" className="login100-form-social-item flex-c-m bg1 m-r-5">
-                                <i className="fa fa-facebook-f" aria-hidden="true"></i>
-                            </a>
-                            <a href="#" className="login100-form-social-item flex-c-m bg2 m-r-5">
-                                <i className="fa fa-twitter" aria-hidden="true"></i>
-                            </a>
-                        </div> */} //todo
                     </form>
                     <div className="login100-more">
                     </div>

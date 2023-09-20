@@ -11,6 +11,7 @@ import CreatePost from './CreatePost';
 import EditPost from './EditPost';
 import { checkIsAdmin } from '../shared/authentification/isAdmin';
 import Admin from './Admin';
+import NotFound from './NotFound';
 
 const AppRouter = () => {
   const [isAuthenticated] = useState(checkIsAuthenticated())
@@ -44,6 +45,7 @@ const AppRouter = () => {
         <Route element={<PrivateRoute isAuthenticated={isAdmin} redirectPath={'/'} />}>
           <Route path="/admin-panel" element={<Admin />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
@@ -51,7 +53,7 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (edit post img) auth by socialMedia, improve like summary for every user, 404-page
+//todo (edit post img) auth by socialMedia, improve like summary for every user, 404-page, auth tranclation
 
 // Также пользователь может поставить лайк собственно самому обзору (не более 1 на обзор от 1 пользователя), 
 // эти лайки складываются по всем обзорам пользователя и отображаются рядом с именем пользователя.

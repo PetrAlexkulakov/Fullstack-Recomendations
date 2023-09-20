@@ -38,7 +38,7 @@ export default {
         CancelChanges: 'Отменить Изменения',
         EditPost: 'Отредактируйте Ваш Пост',
         AllUsers: 'Все пользователи',
-        Username: 'Имя юзера',
+        Username: 'Username',
         Email: 'Email',
         Admin: 'Админ',
         CreatedAt: 'Создан',
@@ -46,5 +46,12 @@ export default {
         Author: "Автор",
         SortRating: 'Сортировка по Рейтингу',
         SortDate: 'Сортировка по Дате',
+        PageNotFound: 'Страница не найдена',
+        SorryPNF: 'Извините, запрошенная вами страница не существует.',
+        BackHome: 'Вернуться на главную',
+        LoginTo: 'Залогиньтесь чтобы продолжить',
+        Password: 'Пароль',
+        RegisterTo: 'Зарегистрируйтесь чтобы продолжить',
+        Register: 'Зарегистрируйтесь',
     }
 }

@@ -46,5 +46,12 @@ export default {
         Author: "Author",
         SortRating: 'Sort by Rating',
         SortDate: 'Sort by Date',
+        PageNotFound: 'Page Not Found',
+        SorryPNF: 'Sorry, the page you requested does not exist.',
+        BackHome: 'Back to Home-page',
+        LoginTo: 'Login to continue',
+        Password: 'Password',
+        RegisterTo: 'Register to continue',
+        Register: 'Register',
     }
 }
