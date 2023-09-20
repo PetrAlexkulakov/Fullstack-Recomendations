@@ -13,7 +13,7 @@ const Cards = ({ posts, isSecondary = false, isAuthor = false }: {
       {posts.length > 0 || isSecondary ? (
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
           {posts.map((post, index) => (
-            <div key={index} className="card mb-4">
+            <div key={index} className="card mb-4" style={{height: 'fit-content'}}>
               <Card post={post} isAuthor={isAuthor} />
             </div>
           ))}

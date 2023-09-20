@@ -62,6 +62,7 @@ const CreatePost = () => {
       axios.post(baseURL + addId("/posts", id), postData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         },
       }).then(() => {
         navigate(addId("/profile", id));

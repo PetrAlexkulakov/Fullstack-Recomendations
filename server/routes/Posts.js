@@ -31,9 +31,9 @@ router.get('/', async (req, res) => {
                     attributes: [], 
                 },
                 {
-                    model: Comments, // Используйте модель комментариев
-                    as: 'comments', // Алиас для комментариев
-                    attributes: [], // Исключите атрибуты комментариев
+                    model: Comments,
+                    as: 'comments',
+                    attributes: [],
                 }
             ],
             order: order 
@@ -113,7 +113,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     await existingPost.setTags([]);
     if (req.body.tags) {
         const tagsReq = req.body.tags.split(';')
-        await addTags(tagsReq, createdPost)
+        await addTags(tagsReq, existingPost)
     }
 
     res.json(existingPost);

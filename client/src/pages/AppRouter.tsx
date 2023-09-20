@@ -53,7 +53,7 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo (edit post img) auth by socialMedia, improve like summary for every user, 404-page, auth tranclation
+//todo (edit post img x2) auth by socialMedia, improve like summary for every user
 
 // Также пользователь может поставить лайк собственно самому обзору (не более 1 на обзор от 1 пользователя), 
 // эти лайки складываются по всем обзорам пользователя и отображаются рядом с именем пользователя.
