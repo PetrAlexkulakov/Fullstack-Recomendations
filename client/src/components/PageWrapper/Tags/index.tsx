@@ -3,8 +3,9 @@ import queryString from 'query-string';
 import { useState } from "react";
 import TagsBody from "../../TagsBody";
 import { useTranslation } from "react-i18next";
+import AccordionWrapper from "../AccordionWrapper";
 
-const Tags = () => {
+const Tags = ({ isSmall }: { isSmall: boolean }) => {
     const [tag, setTag] = useState<string | null>(null);
     const navigator = useNavigate();
     const location = useLocation();
@@ -34,6 +35,21 @@ const Tags = () => {
     }
 
     return (
+      (isSmall ? (
+        <AccordionWrapper header={t('Filter')} >
+          {            
+            <TagsBody 
+              tag={tag} 
+              setTag={setTag} 
+              activeTags={activeTags as string[] | null} 
+              addTag={addTag}
+              deleteTag={deleteTag} 
+            />
+          }
+        </AccordionWrapper>
+      )
+      :
+      (
         <div className="card mb-4">
             <div className="card-header">{t('Filter')}</div>
             <TagsBody 
@@ -41,8 +57,11 @@ const Tags = () => {
               setTag={setTag} 
               activeTags={activeTags as string[] | null} 
               addTag={addTag}
-              deleteTag={deleteTag} />
+              deleteTag={deleteTag} 
+            />
         </div>
+      )
+    )
     )
 }
 
