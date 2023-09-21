@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         totalLikes: {
             type: DataTypes.INTEGER,
-            defaultValue: 0, // начальное значение 0
+            defaultValue: 0, 
         },
         isAdmin: {
             type: DataTypes.BOOLEAN,
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Users.associate = (models) => {
         Users.hasMany(models.Posts, {
-            foreignKey: "userId", // Внешний ключ в таблице Posts, связывающий с таблицей Users
+            foreignKey: "userId", 
         });
     };
 

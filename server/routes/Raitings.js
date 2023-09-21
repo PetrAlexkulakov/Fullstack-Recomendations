@@ -23,7 +23,6 @@ router.get('/:postId/user-rating', async (req, res) => {
     if (userRating) {
       res.status(200).json({ rating: userRating.count });
     } else {
-      // Если пользователь не ставил рейтинг, вернуть 0
       res.status(200).json({ rating: 0 });
     }
   } else {
@@ -52,11 +51,9 @@ router.post('/:postId/rating', async (req, res) => {
     });
 
     if (userRating) {
-      // Если пользователь уже оценил этот пост, обновите его рейтинг
       userRating.count = rating;
       await userRating.save();
     } else {
-      // Создайте новую запись рейтинга пользователя
       userRating = await Raitings.create({
         postId,
         userId,
@@ -64,7 +61,6 @@ router.post('/:postId/rating', async (req, res) => {
       });
     }
 
-    // Получите общий рейтинг поста
     const postRatings = await Raitings.findAll({
       where: {
         postId,
@@ -75,7 +71,6 @@ router.post('/:postId/rating', async (req, res) => {
     const totalRatingSum = totalRatings.reduce((sum, count) => sum + count, 0);
     const averageRating = totalRatingSum / totalRatings.length;
 
-    // Обновите рейтинг поста
     const post = await Posts.findByPk(postId);
     if (post) {
       post.raiting = averageRating;

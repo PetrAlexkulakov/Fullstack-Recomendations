@@ -4,7 +4,6 @@ export function SocialLoginButton() {
   const { loginWithRedirect, logout } = useAuth0();
 
   return (
-    // <button onClick={() => loginWithRedirect({ connection: 'google-oauth2' } as RedirectLoginOptions<AppState>)}>
     <>
         <button onClick={() => loginWithRedirect()}>
             Войти через Google

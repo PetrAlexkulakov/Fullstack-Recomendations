@@ -14,11 +14,6 @@ const AccordionWrapper = ({ header, children }: { header: string, children: JSX.
           data-bs-target={`#panelsStayOpen-collapse${uniqueKey}`}
           aria-expanded="true" 
           aria-controls={`panelsStayOpen-collapse${uniqueKey}`}
-          // style={{
-          //   backgroundColor: 'rgba(0, 125, 215, 0)',
-          //   // borderColor: 'rgba(0, 125, 215, 0)',
-          //   // boxShadow: 'rgba(0, 125, 215, 0) !important',
-          // }}
         >
           {header}
         </button>

@@ -74,7 +74,6 @@ router.post('/:postId/like', async (req, res) => {
         await post.save();
       }
 
-      // Увеличиваем totalLikes пользователя
       const user = await Users.findByPk(post.userId);
       if (user) {
           user.totalLikes += 1;

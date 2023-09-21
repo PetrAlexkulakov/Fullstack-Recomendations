@@ -18,7 +18,6 @@ const Navbar = () => {
     setUser(false); 
     window.location.reload();
   }
-  //todo /\ remove this /\ and change from PageWrapper(?)
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container me-0">
@@ -27,9 +26,7 @@ const Navbar = () => {
           <Menu 
             className="bg-dark w-50"
             disableAutoFocus
-            // width={ '20%' }
             customBurgerIcon={ 
-              // <img src="../src/assets/list.svg" alt='menu' />
               <div className={classes.btnMenu}></div>
             } 
             right

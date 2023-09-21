@@ -7,10 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Tags.associate = (models) => {
-        // Определение связи "многие-ко-многим" между тегами и постами
         Tags.belongsToMany(models.Posts, {
-            through: "PostTags", // Промежуточная таблица для хранения связей
-            foreignKey: "tagId", // Внешний ключ в таблице PostTags, связывающий с таблицей Tags
+            through: "PostTags", 
+            foreignKey: "tagId", 
         });
     };
 

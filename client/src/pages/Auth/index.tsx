@@ -28,8 +28,7 @@ const Auth = () => {
       const response = await axios.post(baseURL + '/auth/login', { email, password });
       const token = response.data.token;
 
-      // Сохранение токена в localStorage (в реальных приложениях лучше использовать secure cookie)
-      localStorage.setItem('token', token); //* may be change
+      localStorage.setItem('token', token); 
       navigation('/')
     } catch (error) {
         if (axios.isAxiosError(error)) {

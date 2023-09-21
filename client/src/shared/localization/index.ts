@@ -10,7 +10,6 @@ i18n
   .use(initReactI18next) 
   .init({
     resources: languages,
-    // lng: "en", 
     fallbackLng: loadLanguageFromLocalStorage() || 'en',
     interpolation: {
       escapeValue: false 

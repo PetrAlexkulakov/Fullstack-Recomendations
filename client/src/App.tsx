@@ -7,7 +7,6 @@ const auth0Config = {
   domain: 'dev-mg7sfg2imb3e7g08.us.auth0.com',
   clientId: '42qiYiAxmGXFzcwO2RjefiZ10rHsy4Bv',
   authorizationParams: { redirect_uri: window.location.origin },
-  // responseType: 'token id_token'
 };
 
 function App() {

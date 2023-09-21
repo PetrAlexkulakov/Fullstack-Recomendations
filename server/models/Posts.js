@@ -59,7 +59,6 @@ module.exports = (sequelize, DataTypes) => {
             as: 'raitings',
         });
 
-        // Добавляем связь с комментариями
         Posts.hasMany(models.Comments, {
             foreignKey: "postId",
             as: "comments",

@@ -80,28 +80,6 @@ const Search = ({ isSmall }: { isSmall: boolean }) => {
   )
 }
 
-{/* <div className="input-group">
-      <input
-        className="form-control"
-        type="text"
-        placeholder={t("EnterSearch")}
-        aria-label="Enter search term..."
-        aria-describedby="button-search"
-        value={searchTerm}
-        onChange={handleInputChange}
-        onKeyDown={(e) => {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                handleSearch();
-            }
-        }}
-      />
-      <button
-        className="btn btn-primary"
-        id="button-search"
-        type="button"
-        onClick={handleSearch}
-      >Go!</button>
-</div> */}
+
 
 export default Search
