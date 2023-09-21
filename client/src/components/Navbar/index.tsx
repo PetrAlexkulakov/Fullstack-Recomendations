@@ -26,9 +26,16 @@ const Navbar = () => {
         {isSmall ?
           <Menu 
             className="bg-dark w-50"
-            customBurgerIcon={ <img src="./src/assets/list.svg" /> } 
+            disableAutoFocus
+            // width={ '20%' }
+            customBurgerIcon={ 
+              <img src="../src/assets/list.svg" alt='menu' />
+            } 
             right
             styles={{
+              bmBurgerButton: {
+                width: '100%',
+              },
               bmItemList: {
                 color: 'white',
                 display: 'flex',
@@ -50,6 +57,9 @@ const Navbar = () => {
                 <button className={classes.btnSignIn + ' mb-1'} onClick={handleLogin}/>
             )}
             <Translation className="w-50" />
+            {user && (
+              <a href="/profile"><button className={classes.btnProfile}/></a>
+            )}
           </Menu>
           :
           <>
