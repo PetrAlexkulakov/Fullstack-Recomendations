@@ -29,7 +29,8 @@ const Navbar = () => {
             disableAutoFocus
             // width={ '20%' }
             customBurgerIcon={ 
-              <img src="../src/assets/list.svg" alt='menu' />
+              // <img src="../src/assets/list.svg" alt='menu' />
+              <div className={classes.btnMenu}></div>
             } 
             right
             styles={{
