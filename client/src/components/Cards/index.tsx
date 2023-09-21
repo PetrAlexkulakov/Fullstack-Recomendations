@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Post } from "../../interfaces/Post"
 import Card from "../Card"
+import classes from './styles.module.scss'
 
 const Cards = ({ posts, isSecondary = false, isAuthor = false }: { 
     posts: Post[], 
@@ -11,7 +12,7 @@ const Cards = ({ posts, isSecondary = false, isAuthor = false }: {
   return (
     <>
       {posts.length > 0 || isSecondary ? (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+        <div className={classes.cardsConteiner}>
           {posts.map((post, index) => (
             <div key={index} className="card mb-4" style={{height: 'fit-content'}}>
               <Card post={post} isAuthor={isAuthor} />

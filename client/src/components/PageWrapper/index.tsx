@@ -14,11 +14,10 @@ const PageWrapper = ({ children, isFull }:
     <>
       <Navbar />
       <div className="container">
-      <div className="row">
+      <div className="row d-flex flex-row-reverse">
         {isFull && 
           <Sort />
         }
-        { children }
           <div className="col-lg-4">
               <div className="card mb-4">
                   <div className="card-header">{t('search')}</div>
@@ -42,6 +41,7 @@ const PageWrapper = ({ children, isFull }:
                 </>
               }
           </div>
+          { children }
       </div>
     </div>
     </>
