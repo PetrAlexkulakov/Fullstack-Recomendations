@@ -78,17 +78,14 @@ router.delete('/image', async (req, res) => {
     }
 })
 
-router.post("/:autorId?", upload.single('image'), async (req, res) => {
+router.post("/:autorId?", async (req, res) => {
     const post = req.body;
-    const imageFile = req.file;
     const autorId = req.params.autorId;
 
     if (checkAuth(req.headers.authorization)) {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, keys.jwt);
         const { userId, isAdmin } = decodedToken;
-
-        post.imageURL = await createImage(imageFile, keyPath)
 
         if (autorId === 'undefined' || autorId === undefined) {
             post.userId = userId;
@@ -109,11 +106,9 @@ router.post("/:autorId?", upload.single('image'), async (req, res) => {
     }
 });
 
-router.put('/:id', upload.single('image'), async (req, res) => {
+router.put('/:id', async (req, res) => {
   const id = req.params.id;
   const postData = req.body;
-  const imageFile = req.file;
-  
 
   const existingPost = await Posts.findByPk(id);
   
@@ -131,7 +126,6 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     }
 
     await deleteFileFromStorage(existingPost.imageURL, keyPath)
-    postData.imageURL = await createImage(imageFile, keyPath)
 
     await existingPost.update(postData);
 

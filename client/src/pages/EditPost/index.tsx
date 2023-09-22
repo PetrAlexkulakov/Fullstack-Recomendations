@@ -28,6 +28,7 @@ const EditPost = () => {
   const [tag, setTag] = useState<string | null>(null);
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFileURL, setSelectedFileURL] = useState<string | null>(null);
   const { register, formState: { errors }, setError, clearErrors, handleSubmit } = useForm<IFormInput>({
     criteriaMode: "all",
     defaultValues: { 
@@ -37,7 +38,8 @@ const EditPost = () => {
     },
   })
   const navigate = useNavigate();
-  const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL
+  const baseURL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
+  const token = localStorage.getItem('token');
 
   const addTag = () => {
     if (tag) {
@@ -58,11 +60,10 @@ const EditPost = () => {
       text: text,
       group: group,
       tags: activeTags.join(';') ? activeTags.join(';') : undefined,
-      image: selectedFile as File
+      imageURL: selectedFileURL
     };
   
     try {
-      const token = localStorage.getItem('token');
       axios.put(baseURL + "/posts/" + id, postData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -76,6 +77,18 @@ const EditPost = () => {
     }
   };
 
+  const handleCancelChanges= () => {
+    if(selectedFileURL) {
+      axios.delete(baseURL + "/posts/image", {
+        data: {
+          imgUrl: selectedFileURL
+        }
+      }).finally(() => {
+        navigate('/profile')
+      })
+    }
+  }
+
   useEffect(() => {
     axios.get(baseURL + '/posts/' + id).then((res) => {
         const data = res.data;
@@ -84,10 +97,35 @@ const EditPost = () => {
         setAnnotation(data!.smallText)
         setText(data!.fullText)
         setGroup(data!.group)
-        setActiveTags(data!.tags.split(';'))
+        setActiveTags(data!.tags !== null ? data!.tags.split(';') : [])
+        setSelectedFileURL(data!.imageURL)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if(selectedFile) {
+      if(selectedFileURL) {
+        axios.delete(baseURL + "/posts/image", {
+          data: {
+            imgUrl: selectedFileURL
+          }
+        })
+      }
+      axios.post(baseURL + "/posts/image", {
+        image: selectedFile
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+      ).then((resp) => {
+        setSelectedFileURL(resp.data.imgUrl as string || null)
+      })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFile])
   
   return (
     <>
@@ -226,8 +264,13 @@ const EditPost = () => {
               clearErrors={clearErrors}
             />
           </div>
+          {selectedFileURL && 
+            <div className="mb-3">
+              <img style={{maxWidth: '50%'}} src={selectedFileURL} alt="Selected File" />
+            </div>
+          }
           <div className="d-flex justify-content-around">
-            <button type="button" className="btn border-black" onClick={() => {navigate('/profile')}}>
+            <button type="button" className="btn border-black" onClick={handleCancelChanges}>
               {t('CancelChanges')}
             </button>
             <button type="submit" className="btn btn-primary">{t('Send')}</button>
