@@ -53,6 +53,31 @@ router.get('/:id', async (req, res) => {
     res.json(post);
 })
 
+router.post('/image', upload.single('image'), async (req, res) => {
+    const imageFile = req.file;
+
+    try {
+        if (checkAuth(req.headers.authorization)) {
+            res.json({ imgUrl: await createImage(imageFile, keyPath) })
+        } else {
+            res.status(401).json({ error: 'Unauthorized' })
+        }
+    } catch (err) { 
+        res.status(500).json({ error: 'Failed' })
+    }
+})
+
+router.delete('/image', async (req, res) => {
+    const imgUrl = req.body.imgUrl;
+
+    try {
+        await deleteFileFromStorage(imgUrl, keyPath);
+        res.status(204).send();
+    } catch (err) {
+        res.status(500).json({ error: 'Failed' })
+    }
+})
+
 router.post("/:autorId?", upload.single('image'), async (req, res) => {
     const post = req.body;
     const imageFile = req.file;
@@ -125,7 +150,6 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const id = req.params.id;
   
-
   const existingPost = await Posts.findByPk(id);
 
   if (!existingPost) {
