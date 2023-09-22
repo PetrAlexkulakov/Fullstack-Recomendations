@@ -56,6 +56,11 @@ textarea {
   max-height: none;
 }
 
+@media (max-width: 750px) {
+  th, td {
+    padding: 0 !important;
+  }
+}
 
 .active {
   color: rgb(255, 132, 0)
