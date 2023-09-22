@@ -1,7 +1,7 @@
 .cardsConteiner {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1%;
+    column-gap: 1%;
 }
 
 @media (max-width: 750px) {

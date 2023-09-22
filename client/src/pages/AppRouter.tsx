@@ -52,5 +52,3 @@ const AppRouter = () => {
 }
 
 export default AppRouter
-
-//todo (edit post img x2) 
