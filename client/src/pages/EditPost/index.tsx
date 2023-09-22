@@ -144,8 +144,8 @@ const EditPost = () => {
                 {...register("title", { 
                   required: t('InputReq'), 
                   maxLength: {
-                    value: 40,
-                    message: `${t('InputCant')} 40 ${t('characters')}`
+                    value: 70,
+                    message: `${t('InputCant')} 70 ${t('characters')}`
                   } 
                 })} 
                 onChange={(e) => setTitle(e.target.value)}
