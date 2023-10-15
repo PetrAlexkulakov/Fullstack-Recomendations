@@ -1,5 +1,5 @@
 <p align="center">
-      <img src="https://ibb.co/VWcqjBF" width="726">
+      <img src="https://i.ibb.co/bgMKWd4/White-logo-no-background.png" width="726">
 </p>
 
 <a href="https://front-recomendations.onrender.com/">Deploy</a>
