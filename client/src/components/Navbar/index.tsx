@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container me-0">
-        <a className="navbar-brand" href="/">Recomendations</a>
+        <a className={classes.navbarBrand + " navbar-brand"} href="/"></a>
         {isSmall ?
           <Menu 
             className="bg-dark w-50"
