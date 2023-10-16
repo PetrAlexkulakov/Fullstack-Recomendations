@@ -27,7 +27,7 @@ const Card = ({ post, isAuthor = false }: { post: Post, isAuthor?: boolean }) =>
       <div className="card-body pt-0 d-flex flex-column justify-content-end align-items-center">
         <Author post={post} />
         <img className="w-100 pb-2" src={post.imageURL} alt="..." />
-        <div className="d-flex gap-3 align-items-center"> 
+        <div className="d-flex gap-3 align-items-center flex-wrap"> 
           <Ratings post={post} />
           <div className="badge bg-secondary text-decoration-none link-light">{post.group}</div>
           <div className="small text-muted">{dataToString(post.createdAt)}</div>

@@ -35,9 +35,14 @@ const Post = () => {
                     <header className="mb-4 d-flex flex-column align-items-center">
                         <Author post={post} />
                         <h3 className="fw-bolder mb-1">{post.title}</h3>
-                        <div className="d-flex justify-content-around gap-3 w-100">
+                        <div className="d-flex justify-content-around gap-3 w-100 align-items-center">
                             <Ratings post={post} />
-                            <div className="badge bg-secondary text-decoration-none link-light">{t(post.group)}</div>
+                            <div 
+                              className="badge bg-secondary text-decoration-none link-light" 
+                              style={{height: 'max-content'}}
+                            >
+                                {t(post.group)}
+                            </div>
                             <div className="text-muted fst-italic mb-2">{dataToString(post.createdAt)}</div>
                         </div>
                     </header>
