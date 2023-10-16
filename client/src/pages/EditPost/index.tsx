@@ -56,8 +56,8 @@ const EditPost = () => {
   const onSubmit: SubmitHandler<IFormInput> = async () => {
     const postData = {
       title: title,
-      annotation: annotation,
-      text: text,
+      smallText: annotation,
+      fullText: text,
       group: group,
       tags: activeTags.join(';') ? activeTags.join(';') : undefined,
       imageURL: selectedFileURL
@@ -67,7 +67,7 @@ const EditPost = () => {
       axios.put(baseURL + "/posts/" + id, postData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
+          // 'Content-Type': 'multipart/form-data',
         },
       }).then(() => {
         navigate("/profile");

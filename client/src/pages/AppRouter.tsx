@@ -52,3 +52,5 @@ const AppRouter = () => {
 }
 
 export default AppRouter
+
+//todo card design (img && buttons), rating sort
