@@ -1,3 +1,12 @@
+.hello {
+    padding: 0 !important;
+    width: 100%;
+    background-color: rgb(233, 233, 233);
+    border: 1px solid rgb(71, 71, 71);
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
 .btnAddPost {
     cursor: pointer;
     width: 100%;

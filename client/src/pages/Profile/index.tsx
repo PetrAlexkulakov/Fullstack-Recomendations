@@ -55,10 +55,13 @@ const Profile = () => {
   
   return (
     <PageWrapper isFull={true}>
-        <div className="col-lg-8 pt-2">
-            <div className="row">
-                <h1>{t('Hello')}, {username}!</h1>
-            </div>
+        <div className="col-lg-8">
+            <h1 
+                className={classes.hello + " text-white pb-1"}
+                style={{WebkitTextStroke: '2px black'}}
+            >
+                {t('Hello')}, {username}!
+            </h1>
             <a href={addId("/createPost", id)} className={classes.btnAddPost}>
                 <div className={classes.centeredContent}>
                     <div className="btn">{t('CreateP')}</div>
@@ -73,7 +76,7 @@ const Profile = () => {
                     <div className={classes.btnArrow}></div>
                 </a>
             }
-            <div className="row">
+            <div className="row pt-2">
                 <Cards posts={posts} isAuthor={true} />
             </div>
         </div>

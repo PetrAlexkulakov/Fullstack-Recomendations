@@ -53,4 +53,4 @@ const AppRouter = () => {
 
 export default AppRouter
 
-//todo test all, improve design
+//todo improve design

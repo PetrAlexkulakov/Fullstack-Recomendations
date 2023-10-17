@@ -13,7 +13,7 @@ const Cards = ({ posts, isSecondary = false, isAuthor = false }: {
   return (
     <>
       {posts.length > 0 || isSecondary ? (
-        <div className={classes.cardsConteiner}>
+        <div className={classes.cardsConteiner + ' p-0'}>
           {!isBig ? 
             posts.map((post, index) => (
               <div key={index} className="card mb-4" style={{height: 'fit-content'}}>
