@@ -1,13 +1,14 @@
 html,
 body,
 #root {
-  min-height: 100%;
+  // min-height: 100%;
   width: 100%;
-  height: 100%;
+  // height: 100%;
 }
 
 #root {
   width: 100%;
+  background-image: url('./assets/movie-background-collage.jpg');
   text-align: center;
 }
 
@@ -15,7 +16,6 @@ body {
   position: relative;
   font-family: Arial, sans-serif;
   font-weight: 400;
-  background: var(--color-bg-light);
 }
 
 *,
@@ -61,6 +61,12 @@ textarea {
     padding: 0 !important;
   }
 }
+@media (max-width: 1250px) and (min-width: 950px) {
+  a, button {
+    padding-left: 1% !important;
+    padding-right: 1% !important;
+  }
+}
 
 .active {
   color: rgb(255, 132, 0)
@@ -70,6 +76,10 @@ textarea {
   width: 1rem;
   height: 1rem;
   background: url('./assets/x.svg') no-repeat center center;
+}
+
+.card{
+  border: 1px solid black;
 }
 
 #react-burger-menu-btn{

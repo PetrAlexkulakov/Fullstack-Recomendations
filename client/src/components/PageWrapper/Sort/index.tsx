@@ -21,6 +21,7 @@ const Sort = () => {
     const newQueryString = queryString.stringify(newParams);
 
     navigator(`${location.pathname}?${newQueryString}`);
+    window.location.reload();
   }
 
   return (

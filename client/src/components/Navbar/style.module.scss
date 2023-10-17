@@ -1,3 +1,13 @@
+.navbarBrand {
+    background-image: url('../../assets/whiteLogo.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 13rem;
+    height: 5rem;
+    padding: 0;
+}
+
 .btnSignOut {
     background-image: url('../../assets/box-arrow-in-left.svg');
     background-size: cover;
