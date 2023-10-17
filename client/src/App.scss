@@ -61,6 +61,12 @@ textarea {
     padding: 0 !important;
   }
 }
+@media (max-width: 1250px),(min-width: 950px) {
+  a, button {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
 
 .active {
   color: rgb(255, 132, 0)
